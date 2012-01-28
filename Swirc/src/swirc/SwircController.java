@@ -20,4 +20,5 @@ public class SwircController {
             view.resetInput();
         }
     }
+    
 }

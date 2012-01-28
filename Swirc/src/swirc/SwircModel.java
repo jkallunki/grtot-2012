@@ -11,7 +11,7 @@ public class SwircModel {
         irc.setVerbose(true);
         try {
             irc.connect("irc.cc.tut.fi");
-            irc.changeNick("StoogeBot2");
+            irc.changeNick("StoogeBot");
             irc.joinChannel(channel);
             irc.sendMessage(channel, "Iltaa!");
         } catch (Exception e) {

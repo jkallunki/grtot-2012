@@ -41,8 +41,12 @@ public class SwircView extends JFrame {
         input.setText("");
     }
     
-    
+    // Add action listener to the submit
     public void addSubmitListener(ActionListener sal) {
+        // Use the submit button
         submit.addActionListener(sal);
+        
+        // Press enter in the input field
+        input.addActionListener(sal);
     }
 }
