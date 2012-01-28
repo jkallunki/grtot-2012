@@ -1,7 +1,7 @@
 package swirc;
 public class SwircModel {
-    protected IrcGateway irc;
-    protected String channel = "#the_three_stooges";
+    private IrcGateway irc;
+    private String channel = "#the_three_stooges";
     
     public SwircModel() {
        System.out.println("SwircModel initialized.");
