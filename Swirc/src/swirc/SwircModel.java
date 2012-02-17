@@ -1,26 +1,36 @@
 package swirc;
+
+import java.util.ArrayList;
+
 public class SwircModel {
-    private IrcGateway irc;
+    private ArrayList<IrcGateway> connections = new ArrayList<IrcGateway>();
     private String channel = "#the_three_stooges";
     
+    // Temporary container for single gateways being handled:
+    private IrcGateway irc;
+    
     public SwircModel() {
-       System.out.println("SwircModel initialized.");
-       irc = new IrcGateway();
-
+        IrcGateway igw = new IrcGateway();
+        connections.add(igw);
+        
         // Enable debugging output.
-        irc.setVerbose(true);
+        igw.setVerbose(true);
         try {
-            irc.connect("irc.cc.tut.fi");
-            irc.changeNick("StoogeBot");
-            irc.joinChannel(channel);
-            irc.sendMessage(channel, "Iltaa!");
+            igw.connect("irc.cc.tut.fi");
+            igw.changeNick("StoogeBot3");
+            igw.joinChannel(channel);
+            igw.sendMessage(channel, "Iltaa!");
         } catch (Exception e) {
             System.out.println("Cant connect!");
         }
     }
     
     public void sendMsg(String msg) {
+        Object[] cons = connections.toArray();
         if(msg != null && msg.length() > 0)
-            irc.sendMessage(channel, msg);
+            for(int i = 0; i < cons.length; i++) {
+                irc = (IrcGateway) cons[i];
+                irc.sendMessage(channel, msg);
+            }
     }
 }
