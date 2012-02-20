@@ -1,8 +1,9 @@
 package swirc;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class SwircModel {
+public class SwircModel extends Observable {
     private ArrayList<IrcGateway> connections = new ArrayList<IrcGateway>();
     private String channel = "#the_three_stooges";
     
@@ -10,7 +11,7 @@ public class SwircModel {
     private IrcGateway irc;
     
     public SwircModel() {
-        IrcGateway igw = new IrcGateway();
+        /*IrcGateway igw = new IrcGateway();
         connections.add(igw);
         
         // Enable debugging output.
@@ -22,7 +23,7 @@ public class SwircModel {
             igw.sendMessage(channel, "Iltaa!");
         } catch (Exception e) {
             System.out.println("Cant connect!");
-        }
+        }*/
     }
     
     public void sendMsg(String msg) {
@@ -32,5 +33,18 @@ public class SwircModel {
                 irc = (IrcGateway) cons[i];
                 irc.sendMessage(channel, msg);
             }
+    }
+    
+    public void connect(String serverAddress, String nick) {
+        IrcGateway igw = new IrcGateway(nick);
+        
+        // Enable debugging output.
+        igw.setVerbose(true);
+        try {
+            igw.connect(serverAddress);
+            connections.add(igw);
+        } catch (Exception e) {
+            System.out.println("Cant connect!");
+        }
     }
 }

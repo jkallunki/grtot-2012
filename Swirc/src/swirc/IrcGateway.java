@@ -2,7 +2,7 @@ package swirc;
 import org.jibble.pircbot.*;
 
 public class IrcGateway extends PircBot {
-    public IrcGateway() {
-        this.setName("IrcGateway");
+    public IrcGateway(String nick) {
+        this.setName(nick);
     }
 }

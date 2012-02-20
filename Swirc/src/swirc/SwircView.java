@@ -3,29 +3,65 @@ package swirc;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.HashMap;
 
 public class SwircView extends JFrame {
+    private SwircController controller;
+    private SwircModel model;
+    
     private JTextField input = new JTextField(25);
     private JButton submit = new JButton("Send");
+    private JTabbedPane tabs = new JTabbedPane();
+    private JMenuBar menuBar;
+    private JToolBar toolBar;
     
     public SwircView(SwircModel model) {
-        System.out.println("SwircView initialized.");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.model = model;
+        controller = new SwircController(model, this);
+        
+        Container cp = this.getContentPane();
+        cp.setLayout(new BorderLayout());
+        
         this.setTitle("Swirc");
         
-        // Constructing the layout
-        JPanel content = new JPanel();
-        content.setLayout(new FlowLayout());
+        JPanel topPane = new JPanel(new GridLayout(0,1));
+        menuBar = new JMenuBar();
         
-        JPanel inputs = new JPanel();
-        inputs.setLayout(new FlowLayout());
-        inputs.add(input);
-        inputs.add(submit);
+        JMenuItem item;
         
-        content.add(inputs);
-        this.setContentPane(content);
+        JMenu swircMenu = new JMenu("Swirc");
+        item = new JMenuItem("Quit");
+        item.setActionCommand("quit");
+        item.addActionListener(controller);
+        swircMenu.add(item);
+        menuBar.add(swircMenu);
         
-        // Set preferred size for the window:
+        JMenu serverMenu = new JMenu("Server");
+        item = new JMenuItem("Connect server");
+        item.setActionCommand("connectServer");
+        item.addActionListener(controller);
+        serverMenu.add(item);
+        
+        item = new JMenuItem("Disconnect");
+        serverMenu.add(item);
+        menuBar.add(serverMenu);
+        
+        topPane.add(menuBar);
+        cp.add(topPane, BorderLayout.NORTH);
+        
+        JPanel inputPane = new JPanel();
+        inputPane.setLayout(new BorderLayout());
+        inputPane.add(submit, BorderLayout.EAST);
+        inputPane.add(input, BorderLayout.CENTER);
+        
+        cp.add(inputPane, BorderLayout.SOUTH);
+        
+        cp.add(tabs, BorderLayout.CENTER);
+        
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setMinimumSize(new Dimension(400, 300));
+        this.setPreferredSize(new Dimension(600, 400));
+        this.setLocationRelativeTo(null);
         this.pack();
     }
     
@@ -41,12 +77,48 @@ public class SwircView extends JFrame {
         input.setText("");
     }
     
-    // Add action listener to the submit
-    public void addSubmitListener(ActionListener sal) {
-        // Use the submit button
-        submit.addActionListener(sal);
+    public void addChannelView() {
+        JPanel tab = new JPanel(new BorderLayout());
         
-        // Press enter in the input field
-        input.addActionListener(sal);
+        String[] test = {"foo", "bar"};
+        DefaultListModel testm = new DefaultListModel();
+        
+        for(int i = 0; i < test.length; i++) {
+            testm.addElement(test[i]);
+        }
+        
+        JTextPane messages = new JTextPane();
+        messages.setText("foobar");
+        messages.setEditable(false);
+        JScrollPane msgPane = new JScrollPane(messages);
+        tab.add(msgPane, BorderLayout.CENTER);
+        
+        JList users = new JList(testm);
+        JScrollPane userPane = new JScrollPane(users);
+        userPane.setPreferredSize(new Dimension(120, 100));
+        tab.add(userPane, BorderLayout.EAST);
+        
+        tabs.addTab("#foo", tab);
+    }
+    
+    public void addServerView(String serverAddress) {
+        JPanel tab = new JPanel(new BorderLayout());
+        
+        JTextPane messages = new JTextPane();
+        messages.setText("Connected " + serverAddress + "\n");
+        messages.setEditable(false);
+        JScrollPane msgPane = new JScrollPane(messages);
+        tab.add(msgPane, BorderLayout.CENTER);
+        
+        tabs.addTab(serverAddress, tab);
+    }
+    
+    public HashMap<String,String> connectPrompt() {
+        ConnectDialog cd = new ConnectDialog(this, model);
+        cd.setVisible(true);
+        HashMap<String,String> connectDetails = new HashMap<String,String>();
+        connectDetails.put("serverAddress", cd.getServerAddress());  
+        connectDetails.put("nick", cd.getNick());    
+        return connectDetails;
     }
 }
