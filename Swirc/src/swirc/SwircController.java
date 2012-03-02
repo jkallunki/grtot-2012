@@ -23,6 +23,9 @@ public class SwircController implements ActionListener, Observer {
             view.addServerView(con.get("serverAddress"));
             model.connect(con.get("serverAddress"), con.get("nick"));
         }
+        else if(code.equals("disconnect")) {
+            model.disconnect();
+        }
         else if(code.equals("quit")) {
             System.exit(0);
         }

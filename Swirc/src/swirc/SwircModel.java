@@ -47,4 +47,8 @@ public class SwircModel extends Observable {
             System.out.println("Cant connect!");
         }
     }
+
+    public void disconnect() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

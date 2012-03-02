@@ -5,8 +5,16 @@ package swirc;
  * @author Janne Kallunki, Jaakko Ritvanen, Ville Hämäläinen
  */
 public class SwircConfs {
-
-    public SwircConfs() {
-        //TODO constructor
+    private SwircConfs instance;
+    
+    protected SwircConfs() {
+        
+    }
+    
+    public SwircConfs getInstance() {
+        if(instance == null) {
+            instance = new SwircConfs();
+        }
+        return instance;
     }
 }

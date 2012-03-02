@@ -43,6 +43,8 @@ public class SwircView extends JFrame {
         serverMenu.add(item);
         
         item = new JMenuItem("Disconnect");
+        item.setActionCommand("disconnect");
+        item.addActionListener(controller);
         serverMenu.add(item);
         menuBar.add(serverMenu);
         
