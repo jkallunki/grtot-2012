@@ -64,7 +64,9 @@ public class SwircView extends JFrame {
         this.setMinimumSize(new Dimension(400, 300));
         this.setPreferredSize(new Dimension(600, 400));
         this.setLocationRelativeTo(null);
+        
         this.pack();
+        this.setVisible(true);
     }
     
     public String getInput() {
