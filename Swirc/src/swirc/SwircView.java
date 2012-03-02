@@ -46,6 +46,17 @@ public class SwircView extends JFrame {
         item.setActionCommand("disconnect");
         item.addActionListener(controller);
         serverMenu.add(item);
+        
+        
+        item = new JMenuItem("Join channel");
+        item.setActionCommand("join");
+        item.addActionListener(controller);
+        serverMenu.add(item);
+        
+        item = new JMenuItem("Leave channel");
+        item.setActionCommand("leave");
+        item.addActionListener(controller);
+        serverMenu.add(item);
         menuBar.add(serverMenu);
         
         topPane.add(menuBar);
@@ -81,7 +92,7 @@ public class SwircView extends JFrame {
         input.setText("");
     }
     
-    public void addChannelView() {
+    public void addChannelView(String channel) {
         JPanel tab = new JPanel(new BorderLayout());
         
         String[] test = {"foo", "bar"};
@@ -102,7 +113,7 @@ public class SwircView extends JFrame {
         userPane.setPreferredSize(new Dimension(120, 100));
         tab.add(userPane, BorderLayout.EAST);
         
-        tabs.addTab("#foo", tab);
+        tabs.addTab("#" + channel, tab);
     }
     
     public void addServerView(String serverAddress) {
@@ -124,5 +135,12 @@ public class SwircView extends JFrame {
         connectDetails.put("serverAddress", cd.getServerAddress());  
         connectDetails.put("nick", cd.getNick());    
         return connectDetails;
+    }
+    
+    public String joinPrompt() {
+        JoinDialog jd = new JoinDialog(this, model);
+        jd.setVisible(true);
+        String channel = jd.getChannel();
+        return channel;
     }
 }

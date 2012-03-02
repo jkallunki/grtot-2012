@@ -49,6 +49,20 @@ public class SwircModel extends Observable {
     }
 
     public void disconnect() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Object[] cons = connections.toArray();
+        for(int i = 0; i < cons.length; i++) {
+            irc = (IrcGateway) cons[i];
+            irc.disconnect();
+        }
+    }
+
+    public void joinChannel(String channel) {
+        Object[] cons = connections.toArray();
+        irc = (IrcGateway) cons[0];
+        irc.joinChannel(channel);
+    }
+
+    public void leaveChannel() {
+        //TODO
     }
 }

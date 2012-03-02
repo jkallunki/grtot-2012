@@ -26,6 +26,14 @@ public class SwircController implements ActionListener, Observer {
         else if(code.equals("disconnect")) {
             model.disconnect();
         }
+        else if(code.equals("join")) {
+            String channel = view.joinPrompt();
+            view.addChannelView(channel);
+            model.joinChannel(channel);
+        }
+        else if(code.equals("leave")) {
+            model.leaveChannel();
+        }
         else if(code.equals("quit")) {
             System.exit(0);
         }
