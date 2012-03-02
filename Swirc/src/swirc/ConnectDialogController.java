@@ -13,16 +13,15 @@ public class ConnectDialogController implements ActionListener {
     ConnectDialog view;
     
     /**
-     *
+     * Constructer.
+     * @param model Model object of Swircs MVC-model
+     * @param view View object of Swircs MVC-model
      */
     public ConnectDialogController(SwircModel model, ConnectDialog view) {
         this.model = model;
         this.view = view;
     }
 
-    /**
-     *
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String code = e.getActionCommand();
