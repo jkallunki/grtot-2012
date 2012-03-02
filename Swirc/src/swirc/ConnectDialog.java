@@ -6,6 +6,10 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import javax.swing.*;
 
+/**
+ * Class for showing dialog that lets user connect to a server.
+ * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
+ */
 public class ConnectDialog extends JDialog {
     private SwircModel model;
     private ConnectDialogController controller;
@@ -13,7 +17,12 @@ public class ConnectDialog extends JDialog {
     private JTextField serverAddress;
     private JTextField nick;
     
-    //Parent needed for relative positioning
+    /**
+     * Constructor for ConnectDialog.
+     * Parent needed for relative positioning.
+     * @param parent Parent for dialog
+     * @param model Model object of Swircs MVC-model
+     */
     public ConnectDialog(JFrame parent, SwircModel model) {
         this.model = model;
         controller = new ConnectDialogController(model, this);
@@ -53,11 +62,19 @@ public class ConnectDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
     
+    /**
+     * Method gets servers address.
+     * @return Servers address
+     */
     public String getServerAddress() {
         String address = serverAddress.getText();
         return (address.length() > 0) ? address : null;
     }
     
+    /**
+     * Method gets users nickname.
+     * @return Users nickname
+     */
     public String getNick() {
         return nick.getText();
     }

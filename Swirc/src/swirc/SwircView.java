@@ -5,6 +5,10 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.HashMap;
 
+/**
+ * View class for Swirc MVC-model. Extends JFrame.
+ * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
+ */
 public class SwircView extends JFrame {
     private SwircController controller;
     private SwircModel model;
@@ -15,6 +19,10 @@ public class SwircView extends JFrame {
     private JMenuBar menuBar;
     private JToolBar toolBar;
     
+    /**
+     * Constructor.
+     * @param model Model object of Swircs MVC-model
+     */
     public SwircView(SwircModel model) {
         this.model = model;
         controller = new SwircController(model, this);
@@ -80,18 +88,31 @@ public class SwircView extends JFrame {
         this.setVisible(true);
     }
     
+    /**
+     *
+     */
     public String getInput() {
         return input.getText();
     }
     
+    /**
+     *
+     */
     public void setInput(String val) {
         input.setText(val);
     }
     
+    /**
+     *
+     */
     public void resetInput() {
         input.setText("");
     }
     
+
+    /**
+     *
+     */
     public void addChannelView(String channel) {
         JPanel tab = new JPanel(new BorderLayout());
         
@@ -113,7 +134,7 @@ public class SwircView extends JFrame {
         userPane.setPreferredSize(new Dimension(120, 100));
         tab.add(userPane, BorderLayout.EAST);
         
-        tabs.addTab("#" + channel, tab);
+        tabs.addTab(channel, tab);
     }
     
     public void addServerView(String serverAddress) {

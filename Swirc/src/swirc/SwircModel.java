@@ -3,6 +3,10 @@ package swirc;
 import java.util.ArrayList;
 import java.util.Observable;
 
+/**
+ * Model class for Swirc MVC-model. Extends abstract class Observable.
+ * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
+ */
 public class SwircModel extends Observable {
     private ArrayList<IrcGateway> connections = new ArrayList<IrcGateway>();
     private String channel = "#the_three_stooges";
@@ -10,6 +14,9 @@ public class SwircModel extends Observable {
     // Temporary container for single gateways being handled:
     private IrcGateway irc;
     
+    /**
+     * Constructor.
+     */
     public SwircModel() {
         /*IrcGateway igw = new IrcGateway();
         connections.add(igw);
@@ -26,6 +33,10 @@ public class SwircModel extends Observable {
         }*/
     }
     
+    /**
+     * Method sends message to channel.
+     * @param msg Message to be sent
+     */
     public void sendMsg(String msg) {
         Object[] cons = connections.toArray();
         if(msg != null && msg.length() > 0)
@@ -35,6 +46,11 @@ public class SwircModel extends Observable {
             }
     }
     
+    /**
+     * Method creates connection to server.
+     * @param serverAddress Address of the server
+     * @param nick Nickname of the user 
+     */
     public void connect(String serverAddress, String nick) {
         IrcGateway igw = new IrcGateway(nick);
         
@@ -47,7 +63,10 @@ public class SwircModel extends Observable {
             System.out.println("Cant connect!");
         }
     }
-
+    
+    /**
+     * //TODO add javadoc
+     */
     public void disconnect() {
         Object[] cons = connections.toArray();
         for(int i = 0; i < cons.length; i++) {

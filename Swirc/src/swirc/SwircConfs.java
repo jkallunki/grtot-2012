@@ -7,10 +7,16 @@ package swirc;
 public class SwircConfs {
     private SwircConfs instance;
     
+    /**
+     * Constructer.
+     */
     protected SwircConfs() {
         
     }
     
+    /**
+     * //TODO add fitting javacode
+     */
     public SwircConfs getInstance() {
         if(instance == null) {
             instance = new SwircConfs();

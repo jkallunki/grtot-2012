@@ -6,13 +6,23 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Controller class for Swirc MVC-model. Implements ActionListener and Observer
+ * interfaces.
+ * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
+ */
 public class SwircController implements ActionListener, Observer {
     private SwircModel model;
     private SwircView view;
     
-    public SwircController(SwircModel m, SwircView v) {
-       model = m;
-       view = v;
+    /**
+     * Constructer.
+     * @param model Model object of Swircs MVC-model
+     * @param view View object of Swircs MVC-model
+     */
+    public SwircController(SwircModel model, SwircView view) {
+       this.model = model;
+       this.view = view;
     }
 
     @Override
@@ -20,11 +30,11 @@ public class SwircController implements ActionListener, Observer {
         String code = e.getActionCommand();
         if(code.equals("connectServer")) {
             HashMap<String,String> con = view.connectPrompt();
-            view.addServerView(con.get("serverAddress"));
-            model.connect(con.get("serverAddress"), con.get("nick"));
+            this.view.addServerView(con.get("serverAddress"));
+            this.model.connect(con.get("serverAddress"), con.get("nick"));
         }
         else if(code.equals("disconnect")) {
-            model.disconnect();
+            this.model.disconnect();
         }
         else if(code.equals("join")) {
             String channel = view.joinPrompt();

@@ -3,14 +3,14 @@ package swirc;
 /**
  * Main-class for Swirc IRC-client. Works as a wrapper for components of MVC-model
  * and also runs the program.
- * @author Janne Kallunki
+ * @author Janne Kallunki, Ville Hämäläinen
  */
 public class Swirc {
    private SwircModel model;
    private SwircView view;
    
    /**
-    *
+    * Constructer for Swirc.
     */
     public Swirc(){
         this.model = new SwircModel();
