@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package swirc;
 
 import java.awt.BorderLayout;
@@ -10,8 +6,8 @@ import java.awt.FlowLayout;
 import javax.swing.*;
 
 /**
- *
- * @author jask
+ * Class for dialog that prompts channel user wants to join.
+ * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
  */
 public class JoinDialog extends JDialog {
     private SwircModel model;
@@ -19,6 +15,11 @@ public class JoinDialog extends JDialog {
     
     private JTextField channel;
     
+    /**
+     * Constructer.
+     * @param parent JFrame that called dialog
+     * @param model SwircModel of this.
+     */
     public JoinDialog(JFrame parent, SwircModel model) {
         this.model = model;
         controller = new JoinDialogController(model, this);
@@ -54,6 +55,10 @@ public class JoinDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
     
+    /**
+     * Returns channel given in channel-JTextField.
+     * @return Channel in channel-JTextField
+     */
     public String getChannel() {
         return channel.getText();
     }

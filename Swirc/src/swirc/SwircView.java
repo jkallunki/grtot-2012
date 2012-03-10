@@ -89,21 +89,23 @@ public class SwircView extends JFrame {
     }
     
     /**
-     *
+     * Gets input from input-JTextField.
+     * @return String from input-JTextField
      */
     public String getInput() {
         return input.getText();
     }
     
     /**
-     *
+     * Sets input-JTextFields value to given value.
+     * @param val Given input value
      */
     public void setInput(String val) {
         input.setText(val);
     }
     
     /**
-     *
+     * Resets input-JTextFields value to empty string.
      */
     public void resetInput() {
         input.setText("");
@@ -111,7 +113,8 @@ public class SwircView extends JFrame {
     
 
     /**
-     *
+     * Adds new channel view for given channel to tabs-JTabbedPane.
+     * @param channel Given channel
      */
     public void addChannelView(String channel) {
         JPanel tab = new JPanel(new BorderLayout());
@@ -137,6 +140,10 @@ public class SwircView extends JFrame {
         tabs.addTab(channel, tab);
     }
     
+    /**
+     * Adds new server view for given server to tabs-JTabbedPane.
+     * @param serverAddress 
+     */
     public void addServerView(String serverAddress) {
         JPanel tab = new JPanel(new BorderLayout());
         
@@ -149,6 +156,10 @@ public class SwircView extends JFrame {
         tabs.addTab(serverAddress, tab);
     }
     
+    /**
+     * Sets up ConnectDialog and returns connection details given in it
+     * @return Connection details given in dialog in HashMap.
+     */
     public HashMap<String,String> connectPrompt() {
         ConnectDialog cd = new ConnectDialog(this, model);
         cd.setVisible(true);
@@ -158,6 +169,10 @@ public class SwircView extends JFrame {
         return connectDetails;
     }
     
+    /**
+     * Sets up JoinDialog and returns channel given in it.
+     * @return Channel given in dialog
+     */
     public String joinPrompt() {
         JoinDialog jd = new JoinDialog(this, model);
         jd.setVisible(true);

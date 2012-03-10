@@ -75,12 +75,19 @@ public class SwircModel extends Observable {
         }
     }
 
+    /**
+     * 
+     * @param channel
+     */
     public void joinChannel(String channel) {
         Object[] cons = connections.toArray();
         irc = (IrcGateway) cons[0];
         irc.joinChannel(channel);
     }
 
+    /**
+     * 
+     */
     public void leaveChannel() {
         //TODO
     }

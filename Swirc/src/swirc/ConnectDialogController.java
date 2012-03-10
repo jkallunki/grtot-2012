@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 /**
  * ConnectDialogController provides controller for ConnectDialog. It implements
  * ActionListener interface.
- * @auth Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
+ * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
  */
 public class ConnectDialogController implements ActionListener {
     SwircModel model;
@@ -22,6 +22,10 @@ public class ConnectDialogController implements ActionListener {
         this.view = view;
     }
 
+    /**
+     * Invoked when an action occurs. 
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String code = e.getActionCommand();

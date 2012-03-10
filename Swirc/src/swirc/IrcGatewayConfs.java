@@ -1,13 +1,13 @@
 package swirc;
 
-/*
+/**
  * Class to store IrcGateway configurations
- * @author Janne Kallunki, Jaakko Ritvanen, Ville Hämäläinen
+ * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
  */
 public class IrcGatewayConfs{
     
-    /*
-     * Constructor
+    /**
+     * Constructor.
      */
     public IrcGatewayConfs() {
         //TODO constructor
