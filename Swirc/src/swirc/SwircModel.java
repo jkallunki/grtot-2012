@@ -65,7 +65,7 @@ public class SwircModel extends Observable {
     }
     
     /**
-     * //TODO add javadoc
+     * Disconnects every IrcGateway in connections-ArrayList
      */
     public void disconnect() {
         Object[] cons = connections.toArray();
@@ -76,8 +76,8 @@ public class SwircModel extends Observable {
     }
 
     /**
-     * 
-     * @param channel
+     * Joins to channel given in String.
+     * @param channel Given channel.
      */
     public void joinChannel(String channel) {
         Object[] cons = connections.toArray();
@@ -86,7 +86,7 @@ public class SwircModel extends Observable {
     }
 
     /**
-     * 
+     * Leaves from channel.
      */
     public void leaveChannel() {
         //TODO

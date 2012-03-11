@@ -15,8 +15,8 @@ public class SwircConfs {
     }
     
     /**
-     * //TODO add fitting javacode
-     * @return 
+     * Returns this instance of SwircConfs.
+     * @return This instance of SwircConfs
      */
     public SwircConfs getInstance() {
         if(instance == null) {

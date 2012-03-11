@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * Controller class for JoinDialog. Implements Action listener.
  * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
  */
 class JoinDialogController implements ActionListener {
@@ -12,9 +12,9 @@ class JoinDialogController implements ActionListener {
     private JoinDialog view;
 
     /**
-     * 
-     * @param model
-     * @param view 
+     * Constructor.
+     * @param model Model object of Swircs MVC-model
+     * @param view View object of Swircs MVC-model
      */
     public JoinDialogController(SwircModel model, JoinDialog view) {
         this.model = model;
@@ -22,7 +22,7 @@ class JoinDialogController implements ActionListener {
     }
 
     /**
-     * 
+     * Invoked when an action occurs. 
      * @param e ActionEvent
      */
     @Override

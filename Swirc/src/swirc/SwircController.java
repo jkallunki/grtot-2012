@@ -25,6 +25,10 @@ public class SwircController implements ActionListener, Observer {
        this.view = view;
     }
 
+    /**
+     * Invoked when an action occurs. 
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String code = e.getActionCommand();
@@ -49,6 +53,11 @@ public class SwircController implements ActionListener, Observer {
         }
     }
 
+    /**
+     * This method is called whenever the observed object is changed.
+     * @param o The observable object.
+     * @param arg  An argument passed to the notifyObservers method.
+     */
     @Override
     public void update(Observable o, Object arg) {
         throw new UnsupportedOperationException("Not supported yet.");
