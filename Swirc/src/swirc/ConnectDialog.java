@@ -4,6 +4,7 @@ package swirc;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.*;
 
 /**
@@ -14,7 +15,10 @@ public class ConnectDialog extends JDialog {
     private SwircModel model;
     private ConnectDialogController controller;
     
-    private JTextField serverAddress;
+    private JComboBox hostName;
+    private JSpinner portNumber;
+    private JPasswordField serverPsw;
+    private JCheckBox showPsw;
     private JTextField nick;
     private boolean confirmed;
     
@@ -31,15 +35,32 @@ public class ConnectDialog extends JDialog {
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
         
-        JPanel formPane = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JPanel formPane = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         
-        formPane.add(new JLabel("Server address"));
-        serverAddress = new JTextField(20);
-        formPane.add(serverAddress);
+        JPanel inputPane = new JPanel(new GridLayout(9, 1, 5, 5));
         
-        formPane.add(new JLabel("Nick"));
+        inputPane.add(new JLabel("Server address"));
+        hostName = new JComboBox(); //TODO check this
+        hostName.setEditable(true);
+        inputPane.add(hostName);
+        
+        SpinnerNumberModel numberSpinner = new SpinnerNumberModel(6667, 0, 9999, 1);
+        inputPane.add(new JLabel("Port"));
+        portNumber = new JSpinner(numberSpinner);
+        inputPane.add(portNumber);
+        
+        inputPane.add(new JLabel("Password"));
+        serverPsw = new JPasswordField(20);
+        inputPane.add(serverPsw);
+        showPsw = new  JCheckBox("Show password");
+        inputPane.add(showPsw);
+            
+        //TODO remember to remove nick from this dialog
+        inputPane.add(new JLabel("Nick"));
         nick = new JTextField(20);
-        formPane.add(nick);
+        inputPane.add(nick);
+        
+        formPane.add(inputPane);
         
         
         cp.add(formPane, BorderLayout.CENTER);
@@ -69,7 +90,7 @@ public class ConnectDialog extends JDialog {
      * @return Servers address
      */
     public String getServerAddress() {
-        String address = serverAddress.getText();
+        String address = hostName.getSelectedItem().toString();
         return (address.length() > 0) ? address : null;
     }
     
@@ -81,6 +102,10 @@ public class ConnectDialog extends JDialog {
         return nick.getText();
     }
     
+    /**
+     * 
+     * @param c
+     */
     public void setConfirmed(boolean c) {
         this.confirmed = c;
     }
