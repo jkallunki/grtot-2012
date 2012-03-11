@@ -80,6 +80,8 @@ public class SwircModel extends Observable {
      * @param channel Given channel.
      */
     public void joinChannel(String channel) {
+        if(channel.charAt(0)!='#') 
+            channel = "#"+channel;
         Object[] cons = connections.toArray();
         irc = (IrcGateway) cons[0];
         
