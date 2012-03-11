@@ -32,6 +32,7 @@ class JoinDialogController implements ActionListener {
             view.dispose();
         }
         else if(code.equals("join")) {
+            view.setConfirmed(true);
             view.dispose();
         }
     }

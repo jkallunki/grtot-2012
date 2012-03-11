@@ -14,6 +14,8 @@ public class JoinDialog extends JDialog {
     private JoinDialogController controller;
     
     private JTextField channel;
+    private JComboBox servers;
+    private boolean confirmed;
     
     /**
      * Constructer.
@@ -25,8 +27,12 @@ public class JoinDialog extends JDialog {
         controller = new JoinDialogController(model, this);
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
+        this.confirmed = false;
         
         JPanel formPane = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        servers = new JComboBox(this.model.getConnectedServers());
+        formPane.add(new JLabel("Servers"));
+        formPane.add(servers);
         
         formPane.add(new JLabel("Channel"));
         channel = new JTextField(20);
@@ -61,6 +67,18 @@ public class JoinDialog extends JDialog {
      */
     public String getChannel() {
         return channel.getText();
+    }
+    
+    public int getServer() {
+        return servers.getSelectedIndex();
+    }
+
+    public void setConfirmed(boolean b) {
+        this.confirmed = b;
+    }
+    
+    public boolean isConfirmed() {
+        return this.confirmed;
     }
     
 }

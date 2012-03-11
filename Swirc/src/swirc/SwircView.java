@@ -228,10 +228,17 @@ public class SwircView extends JFrame {
      * Sets up JoinDialog and returns channel given in it.
      * @return Channel given in dialog
      */
-    public String joinPrompt() {
+    public HashMap<String, String> joinPrompt() {
         JoinDialog jd = new JoinDialog(this, model);
         jd.setVisible(true);
-        String channel = jd.getChannel();
-        return channel;
+        HashMap<String, String> joinDetails = new HashMap<String, String>();
+        if(jd.isConfirmed()) {
+            joinDetails.put("server", Integer.toString(jd.getServer()));
+            joinDetails.put("channel", jd.getChannel());
+            return joinDetails;
+        }
+        else {
+            return null;
+        }
     }
 }

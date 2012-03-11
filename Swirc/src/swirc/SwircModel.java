@@ -83,11 +83,11 @@ public class SwircModel extends Observable {
      * Joins to channel given in String.
      * @param channel Given channel.
      */
-    public void joinChannel(String channel) {
+    public void joinChannel(String channel, int server) {
         if(channel.charAt(0)!='#') 
             channel = "#"+channel;
         Object[] cons = connections.toArray();
-        irc = (IrcGateway) cons[0];
+        irc = (IrcGateway) cons[server];
         irc.joinChannel(channel);
         this.setChanged();
         this.notifyObservers("join");
@@ -102,5 +102,18 @@ public class SwircModel extends Observable {
         irc.partChannel(channel);
         this.setChanged();
         this.notifyObservers("leave");
+    }
+    
+    public String[] getConnectedServers() {
+        Object[] cons = connections.toArray();
+        String[] servers = new String[cons.length];
+        for(int i = 0; i < cons.length; i++) {
+            // Kauheen näköstä koodia tässä, korjattava myöhemmin
+            irc = (IrcGateway) cons[i];
+            String temp = irc.toString();
+            String[] temp1 = temp.split(" ");
+            servers[i] = temp1[8].substring(7, temp1[8].length() - 1);
+        }
+        return servers;
     }
 }
