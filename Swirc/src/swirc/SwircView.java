@@ -56,8 +56,7 @@ public class SwircView extends JFrame {
         item.setActionCommand("disconnect");
         item.addActionListener(controller);
         serverMenu.add(item);
-        
-        
+               
         join = new JMenuItem("Join channel");
         join.setActionCommand("join");
         join.addActionListener(controller);
@@ -70,6 +69,13 @@ public class SwircView extends JFrame {
         leave.setEnabled(false);
         serverMenu.add(leave);
         menuBar.add(serverMenu);
+        
+        JMenu optionsMenu = new JMenu("Options");
+        item = new JMenuItem("User data");
+        item.setActionCommand("userData");
+        item.addActionListener(controller);
+        optionsMenu.add(item);
+        menuBar.add(optionsMenu);
         
         topPane.add(menuBar);
         cp.add(topPane, BorderLayout.NORTH);
@@ -236,6 +242,26 @@ public class SwircView extends JFrame {
             joinDetails.put("server", Integer.toString(jd.getServer()));
             joinDetails.put("channel", jd.getChannel());
             return joinDetails;
+        }
+        else {
+            return null;
+        }
+    }
+    
+     /**
+     * Sets up JoinDialog and returns channel given in it.
+     * @return Channel given in dialog
+     */
+    public HashMap<String, String> userPrompt() {
+        UserDataDialog udd = new UserDataDialog(this, model);
+        udd.setVisible(true);
+        HashMap<String, String> userDetails = new HashMap<String, String>();
+        if(udd.isConfirmed()) {
+            userDetails.put("nick", udd.getNick());
+            userDetails.put("secondaryNick", udd.getSecondaryNick());
+            userDetails.put("username", udd.getUsername());
+            userDetails.put("realName", udd.getRealName());
+            return userDetails;
         }
         else {
             return null;
