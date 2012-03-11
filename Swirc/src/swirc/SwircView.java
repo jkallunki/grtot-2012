@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class SwircView extends JFrame {
     private SwircController controller;
     private SwircModel model;
+    private String activeChannel;
     
     private JTextField input = new JTextField(25);
     private JButton submit = new JButton("Send");
@@ -59,16 +60,21 @@ public class SwircView extends JFrame {
         item = new JMenuItem("Join channel");
         item.setActionCommand("join");
         item.addActionListener(controller);
+        item.setEnabled(true);
         serverMenu.add(item);
         
         item = new JMenuItem("Leave channel");
         item.setActionCommand("leave");
         item.addActionListener(controller);
+        item.setEnabled(true);
         serverMenu.add(item);
         menuBar.add(serverMenu);
         
         topPane.add(menuBar);
         cp.add(topPane, BorderLayout.NORTH);
+        
+        submit.setActionCommand("send");
+        submit.addActionListener(controller);
         
         JPanel inputPane = new JPanel();
         inputPane.setLayout(new BorderLayout());
@@ -111,7 +117,11 @@ public class SwircView extends JFrame {
         input.setText("");
     }
     
+    public String getActiveChannel() {
+        return tabs.getTitleAt(tabs.getSelectedIndex());
+    }
 
+    
     /**
      * Adds new channel view for given channel to tabs-JTabbedPane.
      * @param channel Given channel

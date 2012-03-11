@@ -9,7 +9,7 @@ import java.util.Observable;
  */
 public class SwircModel extends Observable {
     private ArrayList<IrcGateway> connections = new ArrayList<IrcGateway>();
-    private String channel = "#the_three_stooges";
+    //private String channel = "#the_three_stooges";
     
     // Temporary container for single gateways being handled:
     private IrcGateway irc;
@@ -37,7 +37,7 @@ public class SwircModel extends Observable {
      * Method sends message to channel.
      * @param msg Message to be sent
      */
-    public void sendMsg(String msg) {
+    public void sendMsg(String msg, String channel) {
         Object[] cons = connections.toArray();
         if(msg != null && msg.length() > 0)
             for(int i = 0; i < cons.length; i++) {
@@ -82,6 +82,7 @@ public class SwircModel extends Observable {
     public void joinChannel(String channel) {
         Object[] cons = connections.toArray();
         irc = (IrcGateway) cons[0];
+        
         irc.joinChannel(channel);
     }
 
@@ -90,5 +91,6 @@ public class SwircModel extends Observable {
      */
     public void leaveChannel() {
         //TODO
+        
     }
 }

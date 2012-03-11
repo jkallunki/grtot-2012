@@ -51,6 +51,13 @@ public class SwircController implements ActionListener, Observer {
         else if(code.equals("quit")) {
             System.exit(0);
         }
+        else if(code.equals("send")) {
+            String msg = view.getInput();
+            if(!msg.isEmpty()) {
+                model.sendMsg(msg, view.getActiveChannel());
+                view.resetInput();
+            }
+        }
     }
 
     /**
