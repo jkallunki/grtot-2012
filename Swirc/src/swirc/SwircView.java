@@ -195,9 +195,14 @@ public class SwircView extends JFrame {
         ConnectDialog cd = new ConnectDialog(this, model);
         cd.setVisible(true);
         HashMap<String,String> connectDetails = new HashMap<String,String>();
-        connectDetails.put("serverAddress", cd.getServerAddress());  
-        connectDetails.put("nick", cd.getNick());    
-        return connectDetails;
+        if(cd.isConfirmed()) {
+            connectDetails.put("serverAddress", cd.getServerAddress());  
+            connectDetails.put("nick", cd.getNick());  
+            return connectDetails;
+        }
+        else {
+            return null;
+        }
     }
     
     /**
