@@ -59,6 +59,8 @@ public class SwircModel extends Observable {
         try {
             igw.connect(serverAddress);
             connections.add(igw);
+            this.setChanged();
+            this.notifyObservers("connected");
         } catch (Exception e) {
             System.out.println("Cant connect!");
         }
@@ -72,6 +74,8 @@ public class SwircModel extends Observable {
         for(int i = 0; i < cons.length; i++) {
             irc = (IrcGateway) cons[i];
             irc.disconnect();
+            this.setChanged();
+            this.notifyObservers("disconnect");
         }
     }
 
@@ -84,15 +88,19 @@ public class SwircModel extends Observable {
             channel = "#"+channel;
         Object[] cons = connections.toArray();
         irc = (IrcGateway) cons[0];
-        
         irc.joinChannel(channel);
+        this.setChanged();
+        this.notifyObservers("join");
     }
 
     /**
      * Leaves from channel.
      */
-    public void leaveChannel() {
-        //TODO
-        
+    public void leaveChannel(String channel) {
+        Object[] cons = connections.toArray();
+        irc = (IrcGateway) cons[0];
+        irc.partChannel(channel);
+        this.setChanged();
+        this.notifyObservers("leave");
     }
 }

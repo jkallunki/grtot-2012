@@ -46,7 +46,7 @@ public class SwircController implements ActionListener, Observer {
             model.joinChannel(channel);
         }
         else if(code.equals("leave")) {
-            model.leaveChannel();
+            model.leaveChannel(view.getActiveChannel());
         }
         else if(code.equals("quit")) {
             System.exit(0);
@@ -67,6 +67,19 @@ public class SwircController implements ActionListener, Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String code = arg.toString();
+        //System.out.println(code);
+        if(code.equals("connected")) {
+            view.setJoinEnabled();
+        }
+        else if(code.equals("disconnect")) {
+            view.closeTab(); // pitää sulkea myös kanavaikkunat
+        }
+        else if(code.equals("join")) {
+            view.setLeaveEnabled();
+        }
+        else if(code.equals("leave")) {
+            view.closeTab();
+        }
     }
 }

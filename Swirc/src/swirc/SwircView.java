@@ -19,6 +19,7 @@ public class SwircView extends JFrame {
     private JTabbedPane tabs = new JTabbedPane();
     private JMenuBar menuBar;
     private JToolBar toolBar;
+    private JMenuItem join, leave;
     
     /**
      * Constructor.
@@ -27,7 +28,7 @@ public class SwircView extends JFrame {
     public SwircView(SwircModel model) {
         this.model = model;
         controller = new SwircController(model, this);
-        
+        this.model.addObserver(controller);
         Container cp = this.getContentPane();
         cp.setLayout(new BorderLayout());
         
@@ -57,17 +58,17 @@ public class SwircView extends JFrame {
         serverMenu.add(item);
         
         
-        item = new JMenuItem("Join channel");
-        item.setActionCommand("join");
-        item.addActionListener(controller);
-        item.setEnabled(true);
-        serverMenu.add(item);
+        join = new JMenuItem("Join channel");
+        join.setActionCommand("join");
+        join.addActionListener(controller);
+        join.setEnabled(false);
+        serverMenu.add(join);
         
-        item = new JMenuItem("Leave channel");
-        item.setActionCommand("leave");
-        item.addActionListener(controller);
-        item.setEnabled(true);
-        serverMenu.add(item);
+        leave = new JMenuItem("Leave channel");
+        leave.setActionCommand("leave");
+        leave.addActionListener(controller);
+        leave.setEnabled(false);
+        serverMenu.add(leave);
         menuBar.add(serverMenu);
         
         topPane.add(menuBar);
@@ -117,8 +118,28 @@ public class SwircView extends JFrame {
         input.setText("");
     }
     
+    public void setJoinEnabled() {
+        join.setEnabled(true);
+    }
+    
+    public void setJoinUnenabled() {
+        join.setEnabled(false);
+    }
+    
+    public void setLeaveEnabled() {
+        leave.setEnabled(true);
+    }
+    
+    public void setLeaveUnenabled() {
+        leave.setEnabled(false);
+    }
+    
     public String getActiveChannel() {
         return tabs.getTitleAt(tabs.getSelectedIndex());
+    }
+    
+    public void closeTab() {
+        tabs.remove(tabs.getSelectedIndex());
     }
 
     
