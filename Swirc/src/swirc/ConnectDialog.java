@@ -16,6 +16,7 @@ public class ConnectDialog extends JDialog {
     
     private JTextField serverAddress;
     private JTextField nick;
+    private boolean confirmed;
     
     /**
      * Constructor for ConnectDialog.
@@ -26,6 +27,7 @@ public class ConnectDialog extends JDialog {
     public ConnectDialog(JFrame parent, SwircModel model) {
         this.model = model;
         controller = new ConnectDialogController(model, this);
+        this.confirmed = false;
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
         
@@ -77,5 +79,17 @@ public class ConnectDialog extends JDialog {
      */
     public String getNick() {
         return nick.getText();
+    }
+    
+    public void setConfirmed(boolean c) {
+        this.confirmed = c;
+    }
+    
+    /**
+     * Method returns true if connecting was confirmed.
+     * @return True if proceeding connection
+     */
+    public boolean isConfirmed() {
+        return this.confirmed;
     }
 }

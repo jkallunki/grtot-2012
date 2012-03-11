@@ -30,6 +30,7 @@ public class ConnectDialogController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String code = e.getActionCommand();
         if(code.equals("connect")) {
+            view.setConfirmed(true);
             view.dispose();
         }
         else if(code.equals("cancel")) {
