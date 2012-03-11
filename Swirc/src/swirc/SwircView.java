@@ -118,26 +118,45 @@ public class SwircView extends JFrame {
         input.setText("");
     }
     
+    /**
+     * Sets join-JMenuItem enabled
+     */
     public void setJoinEnabled() {
         join.setEnabled(true);
     }
     
+    /**
+     * Sets join-JMenuItem unenabled
+     */
     public void setJoinUnenabled() {
         join.setEnabled(false);
     }
     
+    /**
+     * Sets leave-JMenuItem enabled
+     */
     public void setLeaveEnabled() {
         leave.setEnabled(true);
     }
     
+    /**
+     * Sets leave-JMenuItem unenabled
+     */
     public void setLeaveUnenabled() {
         leave.setEnabled(false);
     }
     
+    /**
+     * Returns title of active channel
+     * @return 
+     */
     public String getActiveChannel() {
         return tabs.getTitleAt(tabs.getSelectedIndex());
     }
     
+    /**
+     * Closes selected tab in tabs-JTabbedPane
+     */
     public void closeTab() {
         tabs.remove(tabs.getSelectedIndex());
     }
