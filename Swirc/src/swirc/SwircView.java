@@ -298,6 +298,7 @@ public class SwircView extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if(arg instanceof Channel) {
             this.addChannelView((Channel) arg);
+            this.setLeaveEnabled();
         }
     }
     
