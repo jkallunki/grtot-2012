@@ -65,6 +65,10 @@ public class SwircConfs {
         }
     }
     
+    /**
+     * Add server to server properties
+     * @param server Server to be added to properties
+     */
     public void addServer(String server) {
         if(serverProperties.isEmpty()) {
             serverProperties.setProperty("servers", server);
@@ -84,6 +88,10 @@ public class SwircConfs {
         }
     }
     
+    /**
+     * Returns servers from properties
+     * @return Servers from properties
+     */
     public String[] getServers() {
         if(!serverProperties.isEmpty()) {
             String temp = serverProperties.getProperty("servers");
@@ -92,6 +100,11 @@ public class SwircConfs {
         return null;
     }
     
+    /**
+     * Searches and returns given server
+     * @param server Server to be searched
+     * @return Searched server
+     */
     public boolean findServer(String server) {
         if(serverProperties.isEmpty()) {
             return false;
@@ -105,10 +118,20 @@ public class SwircConfs {
         return false;
     }
     
+    /**
+     * Sets user data 
+     * @param key Key of user's data
+     * @param value Value of user's data
+     */
     public void setUserData(String key, String value) {
         this.userData.setProperty(key, value);
     }
     
+    /**
+     * Gets user data with given key
+     * @param key
+     * @return 
+     */
     public String getUserData(String key) {
         return this.userData.getProperty(key);
     }
