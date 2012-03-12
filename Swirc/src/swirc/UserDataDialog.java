@@ -73,48 +73,48 @@ public class UserDataDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
     /**
-     * 
-     * @param b 
+     * Sets confirmed to given boolean value
+     * @param b Is confirmed
      */
     public void setConfirmed(boolean b) {
         this.confirmed = b;
     }
     
     /**
-     * 
-     * @return 
+     * Returns the value of confirmed
+     * @return Value of confirmed
      */
     public boolean isConfirmed() {
         return this.confirmed;
     }
 
     /**
-     * 
-     * @return 
+     * Returns nick of the user
+     * @return Nickname of the user
      */
     public String getNick() {
         return nick.getText();
     }
 
     /**
-     * 
-     * @return 
+     * Returns the secondary nickname
+     * @return Secondary nickname
      */
     public String getSecondaryNick() {
         return secondaryNick.getText();
     }
 
     /**
-     * 
-     * @return 
+     * Returns username
+     * @return Username
      */
     public String getUsername() {
         return username.getText();
     }
 
     /**
-     * 
-     * @return 
+     * Returns users real name
+     * @return Users real name
      */
     public String getRealName() {
         return realName.getText();

@@ -293,11 +293,23 @@ public class SwircView extends JFrame {
     }
     
     
-    
+    /**
+     * 
+     */
     public class ActionQuit extends AbstractAction {
+        
+        /**
+         * 
+         * @param text 
+         */
         public ActionQuit(String text) {
             super(text);
         }
+        
+        /**
+         * 
+         * @param e 
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
         }
