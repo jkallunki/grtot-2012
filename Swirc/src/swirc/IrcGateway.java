@@ -1,6 +1,5 @@
 package swirc;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import org.jibble.pircbot.PircBot;
 import org.jibble.pircbot.User;

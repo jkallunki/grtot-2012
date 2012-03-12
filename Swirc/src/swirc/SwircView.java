@@ -1,11 +1,14 @@
 package swirc;
 
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.*;
 
 /**
  * View class for Swirc MVC-model. Extends JFrame.
