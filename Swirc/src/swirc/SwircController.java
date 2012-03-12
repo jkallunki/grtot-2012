@@ -2,9 +2,7 @@ package swirc;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * Controller class for Swirc MVC-model. Implements ActionListener and Observer
@@ -64,7 +62,17 @@ public class SwircController implements ActionListener, Observer {
         else if(code.equals("userData")) {
             HashMap<String, String> saveUser = view.userPrompt();
             if(saveUser != null) {
+
                 model.saveUserInfo(saveUser);
+
+                Iterator i = saveUser.entrySet().iterator();
+                while(i.hasNext()) {
+                    Map.Entry entry = (Map.Entry)i.next();
+                    this.model.setUserData((String)entry.getKey(), (String)entry.getValue());
+                    i.remove();
+                }
+                this.model.saveUserData();
+
             }
         }
         else if(code.equals("send")) {

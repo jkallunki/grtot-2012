@@ -35,17 +35,22 @@ public class UserDataDialog extends JDialog {
         inputPane.add(new JLabel("Nick"));
         nick = new JTextField(20);
         inputPane.add(nick);
+        nick.setText(model.getUserData("nick"));
+        inputPane.add(nick);
         
         inputPane.add(new JLabel("Secondary nick"));
         secondaryNick = new JTextField(20);
+        secondaryNick.setText(model.getUserData("secondaryNick"));
         inputPane.add(secondaryNick);
         
         inputPane.add(new JLabel("Username"));
         username = new JTextField(20);
+        username.setText(model.getUserData("username"));
         inputPane.add(username);
         
         inputPane.add(new JLabel("Real name"));
         realName = new JTextField(20);
+        realName.setText(model.getUserData("realName"));
         inputPane.add(realName);
         
         formPane.add(inputPane);
