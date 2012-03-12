@@ -54,10 +54,9 @@ public class SwircModel extends Observable {
      * @param nick Nickname of the user 
      */
     public void connect(String serverAddress, String nick) {
-        IrcGateway igw = new IrcGateway(this, nick);
-        //Enable debugging output.
-        igw.setVerbose(true);
         try {
+            IrcGateway igw = new IrcGateway(this, nick);
+            igw.setVerbose(true);
             igw.connect(serverAddress);
             connections.add(igw);
             if(!confs.findServer(serverAddress)) {
@@ -67,7 +66,8 @@ public class SwircModel extends Observable {
             this.notifyObservers("connected");
         }
         catch(NickAlreadyInUseException e) {
-            igw.changeNick(confs.getUserData("secondaryNick"));
+            IrcGateway igw = new IrcGateway(this, confs.getUserData("secondaryNick"));
+            igw.setVerbose(true);
             try {
                 igw.connect(serverAddress);
                 connections.add(igw);
