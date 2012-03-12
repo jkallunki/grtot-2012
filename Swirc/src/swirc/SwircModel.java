@@ -1,12 +1,11 @@
 package swirc;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
-import java.util.Properties;
+import org.jibble.pircbot.IrcException;
+import org.jibble.pircbot.NickAlreadyInUseException;
 
 /**
  * Model class for Swirc MVC-model. Extends abstract class Observable.
@@ -33,8 +32,6 @@ public class SwircModel extends Observable {
         
         // Enable debugging output.
         //igw.setVerbose(true);
-        // Handling user data
-
     }
     
     /**
@@ -58,8 +55,7 @@ public class SwircModel extends Observable {
      */
     public void connect(String serverAddress, String nick) {
         IrcGateway igw = new IrcGateway(this, nick);
-        
-        // Enable debugging output.
+        //Enable debugging output.
         igw.setVerbose(true);
         try {
             igw.connect(serverAddress);
@@ -69,8 +65,28 @@ public class SwircModel extends Observable {
             }
             this.setChanged();
             this.notifyObservers("connected");
-        } catch (Exception e) {
+        }
+        catch(NickAlreadyInUseException e) {
+            igw.changeNick(confs.getUserData("secondaryNick"));
+            try {
+                igw.connect(serverAddress);
+                connections.add(igw);
+                if(!confs.findServer(serverAddress)) {
+                    confs.addServer(serverAddress);
+                }
+                this.setChanged();
+                this.notifyObservers("connected");
+            }
+            catch(Exception ee) {
+                System.out.println("Cant connect!");
+                this.setChanged();
+                this.notifyObservers("cant connect");
+            }
+        }
+        catch(Exception e) {
             System.out.println("Cant connect!");
+            this.setChanged();
+            this.notifyObservers("cant connect");
         }
     }
     

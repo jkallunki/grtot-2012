@@ -92,16 +92,16 @@ public class SwircController implements ActionListener, Observer {
         String code = arg.toString();
         //System.out.println(code);
         if(code.equals("connected")) {
-            view.setJoinEnabled();
-            view.setReconnectEnabled();
+            this.view.setJoinEnabled();
+            this.view.setReconnectEnabled();
         }
         else if(code.equals("disconnect")) {
-            view.closeAllTabs();
-            view.setJoinUnenabled();
-            view.setLeaveUnenabled();
+            this.view.closeAllTabs();
+            this.view.setJoinUnenabled();
+            this.view.setLeaveUnenabled();
         }
         else if(code.equals("reconnect")) {
-            String[] servers = model.getConnectedServers();
+            String[] servers = this.model.getConnectedServers();
             if(servers != null) {
                 for(int i = 0; i < servers.length; i++) {
                     this.view.addServerView(servers[i]);
@@ -109,16 +109,19 @@ public class SwircController implements ActionListener, Observer {
             }
         }
         else if(code.equals("join")) {
-            view.setLeaveEnabled();
+            this.view.setLeaveEnabled();
         }
         else if(code.equals("leave")) {
-            view.closeTab();
-            if(view.getTabCount() < 2) {
-                view.setLeaveUnenabled();
+            this.view.closeTab();
+            if(this.view.getTabCount() < 2) {
+                this.view.setLeaveUnenabled();
             }
         }
         else if(code.equals("message")) {
-            view.appendMessage();
+            this.view.appendMessage();
+        }
+        else if(code.equals("cant connect")) {
+            this.view.showWarning("Can't connect server!");
         }
     }
 }

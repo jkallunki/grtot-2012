@@ -118,7 +118,7 @@ public class SwircConfs {
     
     public void saveUserData() {
          try {
-            FileOutputStream out = new FileOutputStream("userData");
+            FileOutputStream out = new FileOutputStream("src/properties/userData");
             userData.store(out, "---No Comment---");
             out.close();
         }
