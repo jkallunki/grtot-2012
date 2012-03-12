@@ -14,7 +14,6 @@ import java.util.Observer;
 public class SwircView extends JFrame implements Observer {
     private SwircController controller;
     private SwircModel model;
-    private String activeChannel;
     
     private JTextField input = new JTextField(25);
     private JButton submit = new JButton("Send");
@@ -284,14 +283,6 @@ public class SwircView extends JFrame implements Observer {
         else {
             return null;
         }
-    }
-    
-
-    public void appendMessage() {
-        String [] messageArray = model.getMessage();
-        System.out.println(messageArray[2]+" : "+messageArray[1]+" : "+messageArray[0]);
-        int tabIndex = tabs.indexOfTab(messageArray[1]);
-        //TODO viestin lisäys textpaneen
     }
 
     @Override

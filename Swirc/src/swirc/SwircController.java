@@ -32,9 +32,12 @@ public class SwircController implements ActionListener, Observer {
         String code = e.getActionCommand();
         if(code.equals("connectServer")) {
             HashMap<String,String> con = view.connectPrompt();
-            if(con != null && con.get("serverAddress") != null && con.get("nick") != null) {
+            if(con != null && !con.get("serverAddress").equals("") && !con.get("nick").equals("")) {
                 this.view.addServerView(con.get("serverAddress"));
                 this.model.connect(con.get("serverAddress"), con.get("nick"), con.get("port"), con.get("pasword"));
+            }
+            else {
+                view.showWarning("Your server address or nick was empty!");
             }
         }
         else if(code.equals("disconnect")) {
@@ -64,6 +67,7 @@ public class SwircController implements ActionListener, Observer {
                 Iterator i = saveUser.entrySet().iterator();
                 while(i.hasNext()) {
                     Map.Entry entry = (Map.Entry)i.next();
+                    
                     this.model.setUserData((String)entry.getKey(), (String)entry.getValue());
                     i.remove();
                 }
@@ -116,11 +120,11 @@ public class SwircController implements ActionListener, Observer {
                 this.view.setLeaveUnenabled();
             }
         }
-        else if(code.equals("message")) {
-            this.view.appendMessage();
-        }
         else if(code.equals("cant connect")) {
             this.view.showWarning("Can't connect server!");
+        }
+        else if(code.equals("cant join")) {
+            this.view.showWarning("Can't join channel!");
         }
     }
 }

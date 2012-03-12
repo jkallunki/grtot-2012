@@ -12,10 +12,6 @@ import org.jibble.pircbot.NickAlreadyInUseException;
  */
 public class SwircModel extends Observable {
     private ArrayList<IrcGateway> connections = new ArrayList<IrcGateway>();
-    //private String channel = "#the_three_stooges";
-    private String message;
-    private String sender;
-    private String channel;
     private SwircConfs confs;
     
     // Temporary container for single gateways being handled:
@@ -132,7 +128,8 @@ public class SwircModel extends Observable {
                 this.notifyObservers("reconnect");
             }
             catch(Exception e) {
-                // TODO ilmoitus virheestä
+                this.setChanged();
+                this.notifyObservers("cant connect");
             }
         }
     }
@@ -149,13 +146,10 @@ public class SwircModel extends Observable {
         try {
             irc = (IrcGateway) cons[server];
             irc.joinChannel(channel);
-            /*
-            this.setChanged();
-            this.notifyObservers("join");
-            */
         }
         catch(Exception e) {
-            // TODO
+            this.setChanged();
+            this.notifyObservers("cant join");
         }
     }
 
@@ -202,22 +196,6 @@ public class SwircModel extends Observable {
             channels = temp;
         }
         return channels;
-    }
-    
-    public void receiveMessage(String message, String channel, String sender) {
-        this.channel = channel;
-        this.message = message;
-        this.sender = sender;
-        this.setChanged();
-        this.notifyObservers("message");
-    }
-    
-    public String[] getMessage() {
-        String[] messageArray = new String[3];
-        messageArray[0] = this.message;
-        messageArray[1] = this.channel;
-        messageArray[2] = this.sender;
-        return messageArray;
     }
     
     public void setUserData(String key, String value) {

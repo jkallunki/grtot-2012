@@ -23,10 +23,9 @@ public class IrcGateway extends PircBot {
     
     @Override
     public void onMessage(String channel, String sender, String login, String hostname, String message) {
-        //model.receiveMessage(message, channel, sender);
         this.getChannel(channel).addMsg(message);
     }
-    
+
     public Channel getChannel(String name) {
         Iterator<Channel> i = channels.iterator();
         while (i.hasNext()) {
