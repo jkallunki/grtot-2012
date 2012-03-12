@@ -69,14 +69,26 @@ public class JoinDialog extends JDialog {
         return channel.getText();
     }
     
+    /**
+     * Returns selected server
+     * @return Selected server
+     */
     public int getServer() {
         return servers.getSelectedIndex();
     }
 
+    /**
+     * Sets the value of confirmed to given
+     * @param b Is confirmed
+     */
     public void setConfirmed(boolean b) {
         this.confirmed = b;
     }
     
+    /**
+     * Returns the value of confirmed
+     * @return Value of confirmed
+     */
     public boolean isConfirmed() {
         return this.confirmed;
     }

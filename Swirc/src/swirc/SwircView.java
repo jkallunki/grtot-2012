@@ -292,6 +292,7 @@ public class SwircView extends JFrame {
         }
     }
     
+
     public void appendMessage() {
         String [] messageArray = model.getMessage();
         System.out.println(messageArray[2]+" : "+messageArray[1]+" : "+messageArray[0]);
@@ -299,10 +300,26 @@ public class SwircView extends JFrame {
         //TODO viestin lisäys textpaneen
     }
     
+
+    
+    /**
+     * 
+     */
+
     public class ActionQuit extends AbstractAction {
+        
+        /**
+         * 
+         * @param text 
+         */
         public ActionQuit(String text) {
             super(text);
         }
+        
+        /**
+         * 
+         * @param e 
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
         }

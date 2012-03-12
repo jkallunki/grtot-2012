@@ -1,6 +1,7 @@
 package swirc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 
 /**
@@ -39,6 +40,7 @@ public class SwircModel extends Observable {
     /**
      * Method sends message to channel.
      * @param msg Message to be sent
+     * @param channel Channel wherre message will be sent 
      */
     public void sendMsg(String msg, String channel) {
         Object[] cons = connections.toArray();
@@ -83,6 +85,9 @@ public class SwircModel extends Observable {
         }
     }
     
+    /**
+     * Reconnects to disconnected IrcGateway
+     */
     public void reconnect() {
         Object[] cons = connections.toArray();
         for(int i = 0; i < cons.length; i++) {
@@ -99,8 +104,9 @@ public class SwircModel extends Observable {
     }
 
     /**
-     * Joins to channel given in String.
+     * Joins to channel in given server.
      * @param channel Given channel.
+     * @param server Server of channel.
      */
     public void joinChannel(String channel, int server) {
         if(channel.charAt(0)!='#') 
@@ -118,7 +124,8 @@ public class SwircModel extends Observable {
     }
 
     /**
-     * Leaves from channel.
+     * Leaves from given channel.
+     * @param channel Channel from where to leave
      */
     public void leaveChannel(String channel) {
         Object[] cons = connections.toArray();
@@ -128,6 +135,10 @@ public class SwircModel extends Observable {
         this.notifyObservers("leave");
     }
     
+    /**
+     * Returns array of connected servers
+     * @return Array of connected servers
+     */
     public String[] getConnectedServers() {
         Object[] cons = connections.toArray();
         String[] servers = new String[cons.length];
@@ -138,6 +149,10 @@ public class SwircModel extends Observable {
         return servers;
     }
     
+    /**
+     * Returns array of connected channels
+     * @return Array of connected channels
+     */
     public String[] getConnectedChannels() {
         Object[] cons = connections.toArray();
         String[] channels = null;
