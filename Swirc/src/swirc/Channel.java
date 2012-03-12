@@ -41,10 +41,14 @@ public class Channel extends Observable {
         return contents;
     }
     
-    public void addUser(String nick, String login, String hostname) {
+    public void addUser(String nick) {
         users.addElement(nick);
-        this.contents = this.contents + "\n" + nick + " (" + login + "@" + hostname + ") has joined the channel.";
         this.setChanged();
         this.notifyObservers("message");
+    }
+    
+    public void userJoins(String nick, String login, String hostname) {
+        this.contents = this.contents + "\n" + nick + " (" + login + "@" + hostname + ") has joined the channel.";
+        this.addUser(nick);
     }
 }

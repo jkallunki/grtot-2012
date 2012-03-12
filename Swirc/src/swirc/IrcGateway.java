@@ -2,6 +2,7 @@ package swirc;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.jibble.pircbot.PircBot;
+import org.jibble.pircbot.User;
 
 /**
  * Class to extend abstract class PircBot.
@@ -49,9 +50,17 @@ public class IrcGateway extends PircBot {
         }
         else {
             c = this.getChannel(channelName);
+            if(c != null) {
+                c.userJoins(joinedNick, login, hostname);
+            }
         }
-        if(c != null) {
-            c.addUser(joinedNick, login, hostname);
+    }
+    
+    @Override
+    protected void onUserList(String channel, User[] users) {
+        Channel c = this.getChannel(channel);
+        for(int i = 0; i < users.length; i++) {
+            c.addUser(users[i].toString());
         }
     }
 }
