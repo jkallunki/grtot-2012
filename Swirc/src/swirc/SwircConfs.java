@@ -13,6 +13,7 @@ import java.util.Properties;
 public class SwircConfs {
     private static SwircConfs instance;
     private Properties serverProperties;
+    private Properties userData;
     
     /**
      * Constructer.
@@ -20,6 +21,8 @@ public class SwircConfs {
     protected SwircConfs() {
         serverProperties = new Properties();
         initServerProperties();
+        userData = new Properties();
+        initUserData();
     }
     
     /**
@@ -41,10 +44,25 @@ public class SwircConfs {
         }
         catch(FileNotFoundException e) {
             System.out.println(e.toString());
-            File mkefile = new File("src/properties/usedServers");
+            File makefile = new File("src/properties/usedServers");
         }
         catch(Exception e) {
             System.out.println(e.toString());
+        }
+    }
+    
+    private void initUserData() {
+        try {
+            FileInputStream dataIn = new FileInputStream("src/properties/userData");
+            userData.load(dataIn);
+            dataIn.close();
+        }
+        catch(FileNotFoundException e) {
+            System.out.println(e.toString());
+            File makefile = new File("src/properties/userData");
+        }
+        catch(Exception e) {
+            //TODO properties not found
         }
     }
     
@@ -88,5 +106,24 @@ public class SwircConfs {
             }
         }
         return false;
+    }
+    
+    public void setUserData(String key, String value) {
+        this.userData.setProperty(key, value);
+    }
+    
+    public String getUserData(String key) {
+        return this.userData.getProperty(key);
+    }
+    
+    public void saveUserData() {
+         try {
+            FileOutputStream out = new FileOutputStream("userData");
+            userData.store(out, "---No Comment---");
+            out.close();
+        }
+        catch(Exception e) {
+            //TODO Saving user data failed
+        }
     }
 }

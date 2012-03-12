@@ -23,9 +23,6 @@ public class SwircModel extends Observable {
     // Temporary container for single gateways being handled:
     private IrcGateway irc;
     
-    // User data
-    private Properties userData;
-    
     /**
      * Constructor.
      */
@@ -37,15 +34,7 @@ public class SwircModel extends Observable {
         // Enable debugging output.
         //igw.setVerbose(true);
         // Handling user data
-        userData = new Properties();
-        try {
-            FileInputStream dataIn = new FileInputStream("userData");
-            userData.load(dataIn);
-            dataIn.close();
-        }
-        catch(Exception e) {
-            //TODO properties not found
-        }
+
     }
     
     /**
@@ -149,10 +138,6 @@ public class SwircModel extends Observable {
         this.notifyObservers("leave");
     }
     
-    public void saveUserInfo(HashMap<String, String> info) {
-        // TODO
-    }
-    
     /**
      * Returns array of connected servers
      * @return Array of connected servers
@@ -203,21 +188,14 @@ public class SwircModel extends Observable {
     }
     
     public void setUserData(String key, String value) {
-        this.userData.setProperty(key, value);
+        confs.setUserData(key, value);
     }
     
     public String getUserData(String key) {
-        return this.userData.getProperty(key);
+        return confs.getUserData(key);
     }
     
     public void saveUserData() {
-        try {
-            FileOutputStream out = new FileOutputStream("userData");
-            userData.store(out, "---No Comment---");
-            out.close();
-        }
-        catch(Exception e) {
-            //TODO Saving user data failed
-        }
+        confs.saveUserData();
     }
 }
