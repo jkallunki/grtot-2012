@@ -1,10 +1,8 @@
 package swirc;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.Properties;
+
 
 /**
  * Class to store SwircModel configurations
@@ -21,6 +19,7 @@ public class SwircConfs {
     protected SwircConfs() {
         serverProperties = new Properties();
         initServerProperties();
+
         userData = new Properties();
         initUserData();
     }
@@ -72,9 +71,7 @@ public class SwircConfs {
         }
         else {
             String servers = serverProperties.getProperty("servers");
-            System.out.println(servers);
             servers = servers.concat("," + server);
-            System.out.println(servers);
             serverProperties.setProperty("servers", servers);
         }
         try {
