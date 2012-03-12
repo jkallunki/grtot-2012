@@ -16,11 +16,13 @@ public class Channel extends Observable {
     private String name;
     private DefaultListModel users;
     private String contents;
+    private IrcGateway gateway;
     
-    public Channel(String name) {
+    public Channel(String name, IrcGateway gw) {
         this.name = name;
         this.users = new DefaultListModel();
         this.contents = "Now talking at " + this.name;
+        this.gateway = gw;
     }
     
     public DefaultListModel getUsers() {
@@ -31,8 +33,8 @@ public class Channel extends Observable {
         return this.name;
     }
     
-    public void addMsg(String msg) {
-        this.contents = this.contents + "\n" + msg;
+    public void addMsg(String sender, String msg) {
+        this.contents = this.contents + "\n<" + sender + "> " + msg;
         this.setChanged();
         this.notifyObservers("message");
     }
@@ -50,5 +52,15 @@ public class Channel extends Observable {
     public void userJoins(String nick, String login, String hostname) {
         this.contents = this.contents + "\n" + nick + " (" + login + "@" + hostname + ") has joined the channel.";
         this.addUser(nick);
+    }
+    
+    public void kick(String nick) {
+        nick = nick.replace("@", "").replace("+", "");
+        gateway.kick(this.name, nick);
+    }
+    
+    public void ban(String nick) {
+        nick = nick.replace("@", "").replace("+", "");
+        gateway.ban(name, nick + "!*@*");
     }
 }

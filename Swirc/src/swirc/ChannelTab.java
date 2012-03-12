@@ -6,9 +6,7 @@ package swirc;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -44,12 +42,26 @@ public class ChannelTab extends JPanel implements Observer {
         
         JMenuItem item = new JMenuItem("Kick");
         item.setActionCommand("kick");
-        //item.addActionListener(new PopupListener());
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nick = (String) users.getSelectedValue();
+                channel.kick(nick);
+            }
+            
+        });
         userMenu.add(item);
         
         item = new JMenuItem("Ban");
         item.setActionCommand("ban");
-        //item.addActionListener(new PopupListener());
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nick = (String) users.getSelectedValue();
+                channel.ban(nick);
+            }
+            
+        });
         userMenu.add(item);
         
         MouseListener userMenuListener = new MouseAdapter() {
@@ -87,5 +99,15 @@ public class ChannelTab extends JPanel implements Observer {
         }
     }
     
+    
+    public class ActionReconnect extends AbstractAction {
+        public ActionReconnect(String text) {
+            super(text);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+        
+    }
     
 }
