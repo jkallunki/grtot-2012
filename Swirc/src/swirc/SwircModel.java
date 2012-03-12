@@ -1,9 +1,7 @@
 package swirc;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
-import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;
 
 /**
@@ -26,11 +24,6 @@ public class SwircModel extends Observable {
      */
     public SwircModel() {
         confs = SwircConfs.getInstance();
-        //IrcGateway igw = new IrcGateway();
-        //connections.add(igw);
-        
-        // Enable debugging output.
-        //igw.setVerbose(true);
     }
     
     /**
@@ -40,12 +33,15 @@ public class SwircModel extends Observable {
      */
     public void sendMsg(String msg, String channel) {
         Object[] cons = connections.toArray();
-        if(msg != null && msg.length() > 0)
+        if(msg != null && msg.length() > 0) {
             for(int i = 0; i < cons.length; i++) {
                 irc = (IrcGateway) cons[i];
                 irc.sendMessage(channel, msg);
-                irc.getChannel(channel).addMsg(irc.getNick(), msg);
+                if(irc.getChannel(channel) != null) {
+                    irc.getChannel(channel).addMsg(irc.getNick(), msg);
+                }
             }
+        }
     }
     
     /**
@@ -149,12 +145,8 @@ public class SwircModel extends Observable {
         Object[] cons = connections.toArray();
         try {
             irc = (IrcGateway) cons[server];
-            irc.joinChannel(channel);
-            /*
-            this.setChanged();
-            this.notifyObservers("join");
-            */
-        }
+            irc.joinChannel(channel); 
+       }
         catch(Exception e) {
             // TODO
         }
