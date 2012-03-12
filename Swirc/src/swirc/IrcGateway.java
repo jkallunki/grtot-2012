@@ -13,6 +13,7 @@ public class IrcGateway extends PircBot {
     private ArrayList<Channel> channels;
     /**
      * Constructor.
+     * @param model SwircModel of this IrcGateway
      * @param nick Nickname of the user
      */
     public IrcGateway(SwircModel model, String nick) {
@@ -27,6 +28,11 @@ public class IrcGateway extends PircBot {
         this.getChannel(channel).addMsg(sender, message);
     }
     
+    /**
+     * Returns channel with given name
+     * @param name Name of the wanted channel
+     * @return Channel with given name
+     */
     public Channel getChannel(String name) {
         Iterator<Channel> i = channels.iterator();
         while (i.hasNext()) {

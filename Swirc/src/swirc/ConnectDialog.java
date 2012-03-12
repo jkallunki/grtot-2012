@@ -1,4 +1,3 @@
-
 package swirc;
 
 import java.awt.BorderLayout;
@@ -93,8 +92,8 @@ public class ConnectDialog extends JDialog {
     }
     
     /**
-     * Method gets servers address.
-     * @return Servers address
+     * Method gets server's address.
+     * @return Server's address
      */
     public String getServerAddress() {
         String address = hostName.getSelectedItem().toString();
@@ -102,32 +101,40 @@ public class ConnectDialog extends JDialog {
     }
     
     /**
-     * Method gets users nickname.
-     * @return Users nickname
+     * Method gets user's nickname.
+     * @return User's nickname
      */
     public String getNick() {
         return nick.getText();
     }
     
+    /**
+     * Returns the password of the server
+     * @return Password of the server
+     */
     public String getPassword() {
         return serverPsw.getText();
     }
     
+    /**
+     * Returns the port of the server
+     * @return Port of the server
+     */
     public String getPort() {
         return String.valueOf((Integer) portNumber.getValue());
     }
     
     /**
-     * 
-     * @param c
+     * Sets the value of confirmed to given
+     * @param c Is confirmed
      */
     public void setConfirmed(boolean c) {
         this.confirmed = c;
     }
     
     /**
-     * Method returns true if connecting was confirmed.
-     * @return True if proceeding connection
+     * Returns the value of confirmed
+     * @return Value of confirmed
      */
     public boolean isConfirmed() {
         return this.confirmed;
