@@ -1,9 +1,7 @@
 package swirc;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
-import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;
 
 /**
@@ -22,11 +20,6 @@ public class SwircModel extends Observable {
      */
     public SwircModel() {
         confs = SwircConfs.getInstance();
-        //IrcGateway igw = new IrcGateway();
-        //connections.add(igw);
-        
-        // Enable debugging output.
-        //igw.setVerbose(true);
     }
     
     /**
@@ -36,11 +29,15 @@ public class SwircModel extends Observable {
      */
     public void sendMsg(String msg, String channel) {
         Object[] cons = connections.toArray();
-        if(msg != null && msg.length() > 0)
+        if(msg != null && msg.length() > 0) {
             for(int i = 0; i < cons.length; i++) {
                 irc = (IrcGateway) cons[i];
                 irc.sendMessage(channel, msg);
+                if(irc.getChannel(channel) != null) {
+                    irc.getChannel(channel).addMsg(irc.getNick(), msg);
+                }
             }
+        }
     }
     
     /**

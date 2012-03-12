@@ -1,21 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package swirc;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
 
 /**
- *
- * @author Janne
+ * Class for creating channel tabs
+ * @author Janne Kallunki
  */
 public class ChannelTab extends JPanel implements Observer {
     
@@ -24,11 +18,14 @@ public class ChannelTab extends JPanel implements Observer {
     private JPopupMenu userMenu;
     private JList users;
     
+    /**
+     * Constructor
+     * @param c Channel of tab being created
+     */
     public ChannelTab(Channel c) {
         this.channel = c;
         this.channel.addObserver(this);
-        this.setLayout(new BorderLayout());
-        
+        this.setLayout(new BorderLayout());     
         
         messages = new JTextPane();
         messages.setText("foobar");
@@ -44,12 +41,26 @@ public class ChannelTab extends JPanel implements Observer {
         
         JMenuItem item = new JMenuItem("Kick");
         item.setActionCommand("kick");
-        //item.addActionListener(new PopupListener());
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nick = (String) users.getSelectedValue();
+                channel.kick(nick);
+            }
+            
+        });
         userMenu.add(item);
         
         item = new JMenuItem("Ban");
         item.setActionCommand("ban");
-        //item.addActionListener(new PopupListener());
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nick = (String) users.getSelectedValue();
+                channel.ban(nick);
+            }
+            
+        });
         userMenu.add(item);
         
         MouseListener userMenuListener = new MouseAdapter() {
@@ -76,10 +87,21 @@ public class ChannelTab extends JPanel implements Observer {
         this.add(userPane, BorderLayout.EAST);
     }
     
+    /**
+     * Returns name of the tab's channel
+     * @return Name of the tab's channel
+     */
     public String getChannelName() {
         return channel.getName();
     }
-
+    
+    /**
+     * This method is called whenever the observed object is changed. 
+     * An application calls an Observable object's notifyObservers method to 
+     * have all the object's observers notified of the change.
+     * @param o the observable object
+     * @param arg an argument passed to the notifyObservers method
+     */
     @Override
     public void update(Observable o, Object arg) {
         if(arg.equals("message")) {
@@ -87,5 +109,15 @@ public class ChannelTab extends JPanel implements Observer {
         }
     }
     
+    
+    public class ActionReconnect extends AbstractAction {
+        public ActionReconnect(String text) {
+            super(text);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+        
+    }
     
 }
