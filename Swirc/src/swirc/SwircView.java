@@ -19,7 +19,7 @@ public class SwircView extends JFrame {
     private JTabbedPane tabs = new JTabbedPane();
     private JMenuBar menuBar;
     private JToolBar toolBar;
-    private JMenuItem join, leave;
+    private Action quit, connect, disconnect, reconnect, join, leave;
     
     /**
      * Constructor.
@@ -40,34 +40,46 @@ public class SwircView extends JFrame {
         JMenuItem item;
         
         JMenu swircMenu = new JMenu("Swirc");
-        item = new JMenuItem("Quit");
+        quit = new ActionQuit("Quit");
+        item = new JMenuItem(quit);
         item.setActionCommand("quit");
         item.addActionListener(controller);
         swircMenu.add(item);
         menuBar.add(swircMenu);
         
         JMenu serverMenu = new JMenu("Server");
-        item = new JMenuItem("Connect server");
+        connect = new ActionConnect("Connect server");
+        item = new JMenuItem(connect);
         item.setActionCommand("connectServer");
         item.addActionListener(controller);
         serverMenu.add(item);
         
-        item = new JMenuItem("Disconnect");
+        disconnect = new ActionDisconnect("Disconnect");
+        item = new JMenuItem(disconnect);
         item.setActionCommand("disconnect");
         item.addActionListener(controller);
         serverMenu.add(item);
-               
-        join = new JMenuItem("Join channel");
-        join.setActionCommand("join");
-        join.addActionListener(controller);
-        join.setEnabled(false);
-        serverMenu.add(join);
         
-        leave = new JMenuItem("Leave channel");
-        leave.setActionCommand("leave");
-        leave.addActionListener(controller);
+        reconnect = new ActionReconnect("Reconnect");
+        item = new JMenuItem(reconnect);
+        item.setActionCommand("reconnect");
+        item.addActionListener(controller);
+        reconnect.setEnabled(false);
+        serverMenu.add(item);
+               
+        join = new ActionJoin("Join channel");
+        item = new JMenuItem(join);
+        item.setActionCommand("join");
+        item.addActionListener(controller);
+        join.setEnabled(false);
+        serverMenu.add(item);
+        
+        leave = new ActionLeave("Leave channel");
+        item = new JMenuItem(leave);
+        item.setActionCommand("leave");
+        item.addActionListener(controller);
         leave.setEnabled(false);
-        serverMenu.add(leave);
+        serverMenu.add(item);
         menuBar.add(serverMenu);
         
         JMenu optionsMenu = new JMenu("Options");
@@ -152,12 +164,24 @@ public class SwircView extends JFrame {
         leave.setEnabled(false);
     }
     
+    public void setReconnectEnabled() {
+        reconnect.setEnabled(true);
+    }
+    
+    public void setReconnectUnenabled() {
+        reconnect.setEnabled(false);
+    }
+    
     /**
      * Returns title of active channel
      * @return 
      */
     public String getActiveChannel() {
         return tabs.getTitleAt(tabs.getSelectedIndex());
+    }
+    
+    public int getTabCount() {
+        return tabs.getTabCount();
     }
     
     /**
@@ -266,5 +290,66 @@ public class SwircView extends JFrame {
         else {
             return null;
         }
+    }
+    
+    
+    
+    public class ActionQuit extends AbstractAction {
+        public ActionQuit(String text) {
+            super(text);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+        
+    }
+    
+    public class ActionConnect extends AbstractAction {
+        public ActionConnect(String text) {
+            super(text);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+    
+    public class ActionDisconnect extends AbstractAction {
+        public ActionDisconnect(String text) {
+            super(text);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+        
+    }
+    
+    public class ActionReconnect extends AbstractAction {
+        public ActionReconnect(String text) {
+            super(text);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+        
+    }
+    
+    public class ActionJoin extends AbstractAction {
+        public ActionJoin(String text) {
+            super(text);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+        
+    }
+    
+    public class ActionLeave extends AbstractAction {
+        public ActionLeave(String text) {
+            super(text);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+        
     }
 }

@@ -42,6 +42,9 @@ public class SwircController implements ActionListener, Observer {
         else if(code.equals("disconnect")) {
             this.model.disconnect();
         }
+        else if(code.equals("reconnect")) {
+            this.model.reconnect();
+        }
         else if(code.equals("join")) {
             HashMap<String, String> join = view.joinPrompt();
             if(join != null) {
@@ -50,7 +53,10 @@ public class SwircController implements ActionListener, Observer {
             }
         }
         else if(code.equals("leave")) {
-            model.leaveChannel(view.getActiveChannel());
+            String channel = view.getActiveChannel();
+            if(channel.startsWith("#")) {
+                model.leaveChannel(channel);
+            }
         }
         else if(code.equals("quit")) {
             System.exit(0);
@@ -63,10 +69,11 @@ public class SwircController implements ActionListener, Observer {
         }
         else if(code.equals("send")) {
             String msg = view.getInput();
-            if(!msg.isEmpty()) {
-                model.sendMsg(msg, view.getActiveChannel());
-                view.resetInput();
+            String channel = view.getActiveChannel();
+            if(!msg.isEmpty() && channel.startsWith("#")) { 
+                model.sendMsg(msg, channel);
             }
+            view.resetInput();
         }
     }
 
@@ -81,15 +88,21 @@ public class SwircController implements ActionListener, Observer {
         //System.out.println(code);
         if(code.equals("connected")) {
             view.setJoinEnabled();
+            view.setReconnectEnabled();
         }
         else if(code.equals("disconnect")) {
             view.closeTab(); // pitää sulkea myös kanavaikkunat
+            view.setJoinUnenabled();
+            view.setLeaveUnenabled();
         }
         else if(code.equals("join")) {
             view.setLeaveEnabled();
         }
         else if(code.equals("leave")) {
             view.closeTab();
+            if(view.getTabCount() < 2) {
+                view.setLeaveUnenabled();
+            }
         }
     }
 }
