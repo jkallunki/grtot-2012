@@ -14,6 +14,7 @@ public class SwircModel extends Observable {
     private String message;
     private String sender;
     private String channel;
+    private SwircConfs confs;
     
     // Temporary container for single gateways being handled:
     private IrcGateway irc;
@@ -22,6 +23,7 @@ public class SwircModel extends Observable {
      * Constructor.
      */
     public SwircModel() {
+        confs = SwircConfs.getInstance();
         /*IrcGateway igw = new IrcGateway();
         connections.add(igw);
         
@@ -64,6 +66,9 @@ public class SwircModel extends Observable {
         try {
             igw.connect(serverAddress);
             connections.add(igw);
+            if(!confs.findServer(serverAddress)) {
+                confs.addServer(serverAddress);
+            }
             this.setChanged();
             this.notifyObservers("connected");
         } catch (Exception e) {
@@ -135,6 +140,10 @@ public class SwircModel extends Observable {
         this.notifyObservers("leave");
     }
     
+    public void saveUserInfo(HashMap<String, String> info) {
+        // TODO
+    }
+    
     /**
      * Returns array of connected servers
      * @return Array of connected servers
@@ -147,6 +156,10 @@ public class SwircModel extends Observable {
             servers[i] = irc.getServer();
         }
         return servers;
+    }
+    
+    public String[] getUsedServers() {
+        return confs.getServers();
     }
     
     /**

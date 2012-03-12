@@ -64,7 +64,7 @@ public class SwircController implements ActionListener, Observer {
         else if(code.equals("userData")) {
             HashMap<String, String> saveUser = view.userPrompt();
             if(saveUser != null) {
-                //TODO Saving user info
+                model.saveUserInfo(saveUser);
             }
         }
         else if(code.equals("send")) {
