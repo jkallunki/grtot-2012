@@ -1,5 +1,6 @@
 package swirc;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import org.jibble.pircbot.PircBot;
 import org.jibble.pircbot.User;
@@ -25,7 +26,7 @@ public class IrcGateway extends PircBot {
     @Override
     public void onMessage(String channel, String sender, String login, String hostname, String message) {
         //model.receiveMessage(message, channel, sender);
-        this.getChannel(channel).addMsg(message);
+        this.getChannel(channel).addMsg(sender, message);
     }
     
     /**
@@ -50,7 +51,7 @@ public class IrcGateway extends PircBot {
         System.out.println("onJoin()");
         if(joinedNick.equals(this.getNick())) {
             System.out.println("it was us!");
-            c = new Channel(channelName);
+            c = new Channel(channelName, this);
             channels.add(c);
             model.joinedChannel(c);
         }

@@ -44,6 +44,7 @@ public class SwircModel extends Observable {
             for(int i = 0; i < cons.length; i++) {
                 irc = (IrcGateway) cons[i];
                 irc.sendMessage(channel, msg);
+                irc.getChannel(channel).addMsg(irc.getNick(), msg);
             }
     }
     

@@ -11,15 +11,18 @@ public class Channel extends Observable {
     private String name;
     private DefaultListModel users;
     private String contents;
+    private IrcGateway gateway;
     
     /**
      * Constructor
      * @param name Name of channel
+     * @param gw IrcGateway for the channel 
      */
-    public Channel(String name) {
+    public Channel(String name, IrcGateway gw) {
         this.name = name;
         this.users = new DefaultListModel();
         this.contents = "Now talking at " + this.name;
+        this.gateway = gw;
     }
     
     /**
@@ -40,10 +43,11 @@ public class Channel extends Observable {
     
     /**
      * Sends message to channel
+     * @param sender Sender of the message
      * @param msg Message to be sent to channel
      */
-    public void addMsg(String msg) {
-        this.contents = this.contents + "\n" + msg;
+    public void addMsg(String sender, String msg) {
+        this.contents = this.contents + "\n<" + sender + "> " + msg;
         this.setChanged();
         this.notifyObservers("message");
     }
@@ -75,5 +79,23 @@ public class Channel extends Observable {
     public void userJoins(String nick, String login, String hostname) {
         this.contents = this.contents + "\n" + nick + " (" + login + "@" + hostname + ") has joined the channel.";
         this.addUser(nick);
+    }
+    
+    /**
+     * Kikcs given user from the channel
+     * @param nick User to be kicked from the channel
+     */
+    public void kick(String nick) {
+        nick = nick.replace("@", "").replace("+", "");
+        gateway.kick(this.name, nick);
+    }
+    
+    /**
+     * Bans given user
+     * @param nick User to be banned
+     */
+    public void ban(String nick) {
+        nick = nick.replace("@", "").replace("+", "");
+        gateway.ban(name, nick + "!*@*");
     }
 }
