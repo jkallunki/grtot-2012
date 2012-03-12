@@ -113,6 +113,10 @@ public class ConnectDialog extends JDialog {
         return serverPsw.getText();
     }
     
+    public String getPort() {
+        return String.valueOf((Integer) portNumber.getValue());
+    }
+    
     /**
      * 
      * @param c
