@@ -1,6 +1,5 @@
 package swirc;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -53,11 +52,19 @@ public class SwircModel extends Observable {
      * @param serverAddress Address of the server
      * @param nick Nickname of the user 
      */
-    public void connect(String serverAddress, String nick) {
+    public void connect(String serverAddress, String nick, String port, String password) {
         try {
             IrcGateway igw = new IrcGateway(this, nick);
             igw.setVerbose(true);
-            igw.connect(serverAddress);
+            if(port == null && password == null) {
+                igw.connect(serverAddress);
+            }
+            else if(port != null && password == null) {
+                igw.connect(serverAddress, Integer.parseInt(port));
+            }
+            else {
+                igw.connect(serverAddress, Integer.parseInt(port), password);
+            }
             connections.add(igw);
             if(!confs.findServer(serverAddress)) {
                 confs.addServer(serverAddress);
@@ -69,7 +76,15 @@ public class SwircModel extends Observable {
             IrcGateway igw = new IrcGateway(this, confs.getUserData("secondaryNick"));
             igw.setVerbose(true);
             try {
-                igw.connect(serverAddress);
+                if(port == null && password == null) {
+                    igw.connect(serverAddress);
+                }
+                else if(port != null && password == null) {
+                    igw.connect(serverAddress, Integer.parseInt(port));
+                }
+                else {
+                    igw.connect(serverAddress, Integer.parseInt(port), password);
+                }
                 connections.add(igw);
                 if(!confs.findServer(serverAddress)) {
                     confs.addServer(serverAddress);

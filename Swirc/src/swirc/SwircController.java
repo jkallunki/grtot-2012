@@ -34,7 +34,7 @@ public class SwircController implements ActionListener, Observer {
             HashMap<String,String> con = view.connectPrompt();
             if(con != null && con.get("serverAddress") != null && con.get("nick") != null) {
                 this.view.addServerView(con.get("serverAddress"));
-                this.model.connect(con.get("serverAddress"), con.get("nick"));
+                this.model.connect(con.get("serverAddress"), con.get("nick"), con.get("port"), con.get("pasword"));
             }
         }
         else if(code.equals("disconnect")) {

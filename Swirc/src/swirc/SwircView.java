@@ -238,7 +238,9 @@ public class SwircView extends JFrame implements Observer {
         HashMap<String,String> connectDetails = new HashMap<String,String>();
         if(cd.isConfirmed()) {
             connectDetails.put("serverAddress", cd.getServerAddress());  
-            connectDetails.put("nick", cd.getNick());  
+            connectDetails.put("nick", cd.getNick());
+            connectDetails.put("port", cd.getPort());
+            connectDetails.put("password", cd.getPassword());
             return connectDetails;
         }
         else {
