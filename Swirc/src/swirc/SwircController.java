@@ -91,7 +91,7 @@ public class SwircController implements ActionListener, Observer {
             view.setReconnectEnabled();
         }
         else if(code.equals("disconnect")) {
-            view.closeTab(); // pitää sulkea myös kanavaikkunat
+            view.closeAllTabs();
             view.setJoinUnenabled();
             view.setLeaveUnenabled();
         }

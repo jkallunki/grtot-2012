@@ -190,6 +190,10 @@ public class SwircView extends JFrame {
     public void closeTab() {
         tabs.remove(tabs.getSelectedIndex());
     }
+    
+    public void closeAllTabs() {
+        tabs.removeAll();
+    }
 
     
     /**
