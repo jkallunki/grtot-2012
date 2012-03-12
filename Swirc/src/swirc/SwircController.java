@@ -46,7 +46,6 @@ public class SwircController implements ActionListener, Observer {
         else if(code.equals("join")) {
             HashMap<String, String> join = view.joinPrompt();
             if(join != null) {
-                view.addChannelView(join.get("channel"));
                 model.joinChannel(join.get("channel"), Integer.parseInt(join.get("server")));
             }
         }

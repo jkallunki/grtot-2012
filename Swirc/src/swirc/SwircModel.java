@@ -119,8 +119,10 @@ public class SwircModel extends Observable {
         try {
             irc = (IrcGateway) cons[server];
             irc.joinChannel(channel);
+            /*
             this.setChanged();
             this.notifyObservers("join");
+            */
         }
         catch(Exception e) {
             // TODO
@@ -201,5 +203,11 @@ public class SwircModel extends Observable {
         catch(Exception e) {
             //TODO Saving user data failed
         }
+    }
+
+    void joinedChannel(Channel c) {
+        this.setChanged();
+        this.notifyObservers(c);
+        System.out.println("JOINED CHANNEL " + c.getName());
     }
 }
