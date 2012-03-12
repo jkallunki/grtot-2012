@@ -4,12 +4,14 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * View class for Swirc MVC-model. Extends JFrame.
  * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
  */
-public class SwircView extends JFrame {
+public class SwircView extends JFrame implements Observer {
     private SwircController controller;
     private SwircModel model;
     private String activeChannel;
@@ -29,6 +31,7 @@ public class SwircView extends JFrame {
         this.model = model;
         controller = new SwircController(model, this);
         this.model.addObserver(controller);
+        this.model.addObserver(this);
         Container cp = this.getContentPane();
         cp.setLayout(new BorderLayout());
         
@@ -204,28 +207,9 @@ public class SwircView extends JFrame {
      * Adds new channel view for given channel to tabs-JTabbedPane.
      * @param channel Given channel
      */
-    public void addChannelView(String channel) {
-        JPanel tab = new JPanel(new BorderLayout());
-        
-        String[] test = {"foo", "bar"};
-        DefaultListModel testm = new DefaultListModel();
-        
-        for(int i = 0; i < test.length; i++) {
-            testm.addElement(test[i]);
-        }
-        
-        JTextPane messages = new JTextPane();
-        messages.setText("foobar");
-        messages.setEditable(false);
-        JScrollPane msgPane = new JScrollPane(messages);
-        tab.add(msgPane, BorderLayout.CENTER);
-        
-        JList users = new JList(testm);
-        JScrollPane userPane = new JScrollPane(users);
-        userPane.setPreferredSize(new Dimension(120, 100));
-        tab.add(userPane, BorderLayout.EAST);
-        
-        tabs.addTab(channel, tab);
+    public void addChannelView(Channel c) {
+        ChannelTab ct = new ChannelTab(c);
+        tabs.addTab(c.getName(), ct);
     }
     
     /**
@@ -306,6 +290,13 @@ public class SwircView extends JFrame {
         System.out.println(messageArray[2]+" : "+messageArray[1]+" : "+messageArray[0]);
         int tabIndex = tabs.indexOfTab(messageArray[1]);
         //TODO viestin lisäys textpaneen
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(arg instanceof Channel) {
+            this.addChannelView((Channel) arg);
+        }
     }
     
 
