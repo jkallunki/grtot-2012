@@ -1,8 +1,12 @@
 package swirc;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Properties;
 
 /**
  * Model class for Swirc MVC-model. Extends abstract class Observable.
@@ -18,23 +22,23 @@ public class SwircModel extends Observable {
     // Temporary container for single gateways being handled:
     private IrcGateway irc;
     
+    // User data
+    private Properties userData;
+    
     /**
      * Constructor.
      */
     public SwircModel() {
-        /*IrcGateway igw = new IrcGateway();
-        connections.add(igw);
-        
-        // Enable debugging output.
-        igw.setVerbose(true);
+        // Handling user data
+        userData = new Properties();
         try {
-            igw.connect("irc.cc.tut.fi");
-            igw.changeNick("StoogeBot3");
-            igw.joinChannel(channel);
-            igw.sendMessage(channel, "Iltaa!");
-        } catch (Exception e) {
-            System.out.println("Cant connect!");
-        }*/
+            FileInputStream dataIn = new FileInputStream("userData");
+            userData.load(dataIn);
+            dataIn.close();
+        }
+        catch(Exception e) {
+            //TODO properties not found
+        }
     }
     
     /**
@@ -178,5 +182,24 @@ public class SwircModel extends Observable {
         messageArray[1] = this.channel;
         messageArray[2] = this.sender;
         return messageArray;
+    }
+    
+    public void setUserData(String key, String value) {
+        this.userData.setProperty(key, value);
+    }
+    
+    public String getUserData(String key) {
+        return this.userData.getProperty(key);
+    }
+    
+    public void saveUserData() {
+        try {
+            FileOutputStream out = new FileOutputStream("userData");
+            userData.store(out, "---No Comment---");
+            out.close();
+        }
+        catch(Exception e) {
+            //TODO Saving user data failed
+        }
     }
 }

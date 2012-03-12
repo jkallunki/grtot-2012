@@ -277,8 +277,8 @@ public class SwircView extends JFrame {
     }
     
      /**
-     * Sets up JoinDialog and returns channel given in it.
-     * @return Channel given in dialog
+     * Sets up UserDataDialog and returns data given in it.
+     * @return User data given in dialog
      */
     public HashMap<String, String> userPrompt() {
         UserDataDialog udd = new UserDataDialog(this, model);
