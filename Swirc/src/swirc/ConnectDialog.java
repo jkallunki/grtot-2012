@@ -40,7 +40,7 @@ public class ConnectDialog extends JDialog {
         JPanel inputPane = new JPanel(new GridLayout(9, 1, 5, 5));
         
         inputPane.add(new JLabel("Server address"));
-        hostName = new JComboBox(); //TODO check this
+        hostName = new JComboBox(this.model.getUsedServers()); //TODO check this
         hostName.setEditable(true);
         inputPane.add(hostName);
         
@@ -58,6 +58,7 @@ public class ConnectDialog extends JDialog {
         //TODO remember to remove nick from this dialog
         inputPane.add(new JLabel("Nick"));
         nick = new JTextField(20);
+        nick.setText(this.model.getUserData("nick"));
         inputPane.add(nick);
         
         formPane.add(inputPane);

@@ -197,6 +197,10 @@ public class SwircView extends JFrame implements Observer {
     public void closeAllTabs() {
         tabs.removeAll();
     }
+    
+    public void showWarning(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
 
     
     /**

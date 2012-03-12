@@ -1,12 +1,11 @@
 package swirc;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
-import java.util.Properties;
+import org.jibble.pircbot.IrcException;
+import org.jibble.pircbot.NickAlreadyInUseException;
 
 /**
  * Model class for Swirc MVC-model. Extends abstract class Observable.
@@ -18,27 +17,21 @@ public class SwircModel extends Observable {
     private String message;
     private String sender;
     private String channel;
+    private SwircConfs confs;
     
     // Temporary container for single gateways being handled:
     private IrcGateway irc;
-    
-    // User data
-    private Properties userData;
     
     /**
      * Constructor.
      */
     public SwircModel() {
-        // Handling user data
-        userData = new Properties();
-        try {
-            FileInputStream dataIn = new FileInputStream("userData");
-            userData.load(dataIn);
-            dataIn.close();
-        }
-        catch(Exception e) {
-            //TODO properties not found
-        }
+        confs = SwircConfs.getInstance();
+        //IrcGateway igw = new IrcGateway();
+        //connections.add(igw);
+        
+        // Enable debugging output.
+        //igw.setVerbose(true);
     }
     
     /**
@@ -61,17 +54,39 @@ public class SwircModel extends Observable {
      * @param nick Nickname of the user 
      */
     public void connect(String serverAddress, String nick) {
-        IrcGateway igw = new IrcGateway(this, nick);
-        
-        // Enable debugging output.
-        igw.setVerbose(true);
         try {
+            IrcGateway igw = new IrcGateway(this, nick);
+            igw.setVerbose(true);
             igw.connect(serverAddress);
             connections.add(igw);
+            if(!confs.findServer(serverAddress)) {
+                confs.addServer(serverAddress);
+            }
             this.setChanged();
             this.notifyObservers("connected");
-        } catch (Exception e) {
+        }
+        catch(NickAlreadyInUseException e) {
+            IrcGateway igw = new IrcGateway(this, confs.getUserData("secondaryNick"));
+            igw.setVerbose(true);
+            try {
+                igw.connect(serverAddress);
+                connections.add(igw);
+                if(!confs.findServer(serverAddress)) {
+                    confs.addServer(serverAddress);
+                }
+                this.setChanged();
+                this.notifyObservers("connected");
+            }
+            catch(Exception ee) {
+                System.out.println("Cant connect!");
+                this.setChanged();
+                this.notifyObservers("cant connect");
+            }
+        }
+        catch(Exception e) {
             System.out.println("Cant connect!");
+            this.setChanged();
+            this.notifyObservers("cant connect");
         }
     }
     
@@ -155,6 +170,10 @@ public class SwircModel extends Observable {
         return servers;
     }
     
+    public String[] getUsedServers() {
+        return confs.getServers();
+    }
+    
     /**
      * Returns array of connected channels
      * @return Array of connected channels
@@ -187,22 +206,15 @@ public class SwircModel extends Observable {
     }
     
     public void setUserData(String key, String value) {
-        this.userData.setProperty(key, value);
+        confs.setUserData(key, value);
     }
     
     public String getUserData(String key) {
-        return this.userData.getProperty(key);
+        return confs.getUserData(key);
     }
     
     public void saveUserData() {
-        try {
-            FileOutputStream out = new FileOutputStream("userData");
-            userData.store(out, "---No Comment---");
-            out.close();
-        }
-        catch(Exception e) {
-            //TODO Saving user data failed
-        }
+        confs.saveUserData();
     }
 
     void joinedChannel(Channel c) {
