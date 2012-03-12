@@ -114,7 +114,7 @@ public class ConnectDialog extends JDialog {
     }
     
     public String getPort() {
-        return (String) portNumber.getValue();
+        return String.valueOf((Integer) portNumber.getValue());
     }
     
     /**
