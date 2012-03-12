@@ -292,7 +292,12 @@ public class SwircView extends JFrame {
         }
     }
     
-    
+    public void appendMessage() {
+        String [] messageArray = model.getMessage();
+        System.out.println(messageArray[2]+" : "+messageArray[1]+" : "+messageArray[0]);
+        int tabIndex = tabs.indexOfTab(messageArray[1]);
+        //TODO viestin lisäys textpaneen
+    }
     
     public class ActionQuit extends AbstractAction {
         public ActionQuit(String text) {

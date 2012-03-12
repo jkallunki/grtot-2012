@@ -10,6 +10,9 @@ import java.util.Observable;
 public class SwircModel extends Observable {
     private ArrayList<IrcGateway> connections = new ArrayList<IrcGateway>();
     //private String channel = "#the_three_stooges";
+    private String message;
+    private String sender;
+    private String channel;
     
     // Temporary container for single gateways being handled:
     private IrcGateway irc;
@@ -52,7 +55,7 @@ public class SwircModel extends Observable {
      * @param nick Nickname of the user 
      */
     public void connect(String serverAddress, String nick) {
-        IrcGateway igw = new IrcGateway(nick);
+        IrcGateway igw = new IrcGateway(this, nick);
         
         // Enable debugging output.
         igw.setVerbose(true);
@@ -86,6 +89,8 @@ public class SwircModel extends Observable {
             irc = (IrcGateway) cons[i];
             try {
                 irc.reconnect();
+                this.setChanged();
+                this.notifyObservers("reconnect");
             }
             catch(Exception e) {
                 // TODO ilmoitus virheestä
@@ -128,9 +133,7 @@ public class SwircModel extends Observable {
         String[] servers = new String[cons.length];
         for(int i = 0; i < cons.length; i++) {
             irc = (IrcGateway) cons[i];
-            String temp = irc.toString();
-            String[] temp1 = temp.split(" ");
-            servers[i] = temp1[8].substring(7, temp1[8].length() - 1);
+            servers[i] = irc.getServer();
         }
         return servers;
     }
@@ -144,5 +147,21 @@ public class SwircModel extends Observable {
             channels = temp;
         }
         return channels;
+    }
+    
+    public void receiveMessage(String message, String channel, String sender) {
+        this.channel = channel;
+        this.message = message;
+        this.sender = sender;
+        this.setChanged();
+        this.notifyObservers("message");
+    }
+    
+    public String[] getMessage() {
+        String[] messageArray = new String[3];
+        messageArray[0] = this.message;
+        messageArray[1] = this.channel;
+        messageArray[2] = this.sender;
+        return messageArray;
     }
 }

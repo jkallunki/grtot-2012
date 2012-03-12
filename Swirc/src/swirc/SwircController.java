@@ -95,6 +95,14 @@ public class SwircController implements ActionListener, Observer {
             view.setJoinUnenabled();
             view.setLeaveUnenabled();
         }
+        else if(code.equals("reconnect")) {
+            String[] servers = model.getConnectedServers();
+            if(servers != null) {
+                for(int i = 0; i < servers.length; i++) {
+                    this.view.addServerView(servers[i]);
+                }
+            }
+        }
         else if(code.equals("join")) {
             view.setLeaveEnabled();
         }
@@ -103,6 +111,9 @@ public class SwircController implements ActionListener, Observer {
             if(view.getTabCount() < 2) {
                 view.setLeaveUnenabled();
             }
+        }
+        else if(code.equals("message")) {
+            view.appendMessage();
         }
     }
 }

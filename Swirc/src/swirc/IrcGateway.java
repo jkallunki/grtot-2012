@@ -6,12 +6,17 @@ import org.jibble.pircbot.*;
  * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
  */
 public class IrcGateway extends PircBot {
-
+    private SwircModel model;
     /**
      * Constructor.
      * @param nick Nickname of the user
      */
-    public IrcGateway(String nick) {
+    public IrcGateway(SwircModel model, String nick) {
+        this.model = model;
         this.setName(nick);
+    }
+    
+    public void onMessage(String channel, String sender, String login, String hostname, String message) {
+        model.receiveMessage(message, channel, sender);
     }
 }
