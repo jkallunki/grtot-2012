@@ -207,7 +207,13 @@ public class SwircModel extends Observable {
      * @param value User's data
      */
     public void setUserData(String key, String value) {
-        confs.setUserData(key, value);
+        if(key.isEmpty() || value.isEmpty()) {
+            this.setChanged();
+            this.notifyObservers("userDataError");
+        }
+        else {
+            confs.setUserData(key, value);
+        }
     }
     
     /**
