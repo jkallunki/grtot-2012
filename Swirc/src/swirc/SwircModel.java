@@ -64,35 +64,6 @@ public class SwircModel extends Observable {
             this.setChanged();
             this.notifyObservers("connected");
         }
-        catch(NickAlreadyInUseException e) {
-            IrcGateway igw = new IrcGateway(this, confs.getUserData("secondaryNick"));
-            igw.setVerbose(true);
-            try {
-                if(port == null && password == null) {
-                    igw.connect(serverAddress);
-                }
-                else if(port != null && password == null) {
-                    igw.connect(serverAddress, Integer.parseInt(port));
-                }
-                else {
-                    igw.connect(serverAddress, Integer.parseInt(port), password);
-                }
-                connections.add(igw);
-                if(!confs.findServer(serverAddress)) {
-                    confs.addServer(serverAddress);
-                }
-                this.setChanged();
-                this.notifyObservers("connected");
-            }
-            catch(Exception ee) {
-//                System.out.println("Cant connect!");
-//                this.setChanged();
-//                this.notifyObservers("cant connect");
-            }
-        }
-        catch(Exception e) {
-            System.out.println("Cant connect!");
-        } 
         catch (Exception ex) {
             this.setChanged();
             this.notifyObservers("cant connect");
@@ -284,6 +255,14 @@ public class SwircModel extends Observable {
             // Ban only the nick without hostmask
             gw.ban(channel, nick + "!*@*");
         }
+    }
+    
+    /**
+     * Returns configuration object
+     * @return SwircConfs configuration object
+     */
+    public SwircConfs getConfs() {
+        return confs;
     }
     
     public void cantConnect() {

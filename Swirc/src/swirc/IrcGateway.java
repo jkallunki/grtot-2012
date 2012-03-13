@@ -101,6 +101,9 @@ public class IrcGateway extends PircBot implements Runnable {
         }
         catch(NickAlreadyInUseException e) {
             this.setVerbose(true);
+            String altNick = model.getConfs().getUserData("secondaryNick");
+            this.setName(altNick);
+            this.nick = altNick;
             try {
                 if(port == null && password == null) {
                     this.connect(this.serverAddress);
