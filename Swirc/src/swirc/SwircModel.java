@@ -48,7 +48,6 @@ public class SwircModel extends Observable {
     /**
      * Method creates connection to server.
      * @param serverAddress Address of the server
-     * @param nick Nickname of the user
      * @param port Server's port
      * @param password  Server's password
      */
@@ -274,6 +273,12 @@ public class SwircModel extends Observable {
         }
     }
 
+    /**
+     * Gives op rights to user
+     * @param server Server of the event
+     * @param channel Channel of the event
+     * @param nick User to be given the op rights
+     */
     public void op(String server, String channel, String nick) {
         // Get the correct connection
         IrcGateway gw = this.getGateway(server);
@@ -287,6 +292,12 @@ public class SwircModel extends Observable {
         }
     }
     
+    /**
+     * Removes op rights from user
+     * @param server Server of the event
+     * @param channel Channel of the event
+     * @param nick User whose op rights will be removed
+     */
     public void deOp(String server, String channel, String nick) {
         // Get the correct connection
         IrcGateway gw = this.getGateway(server);
@@ -300,6 +311,12 @@ public class SwircModel extends Observable {
         }
     }
     
+    /**
+     * Gives voice rights to user
+     * @param server Server of the event
+     * @param channel Channel of the event
+     * @param nick User who will be given voice rights
+     */
     public void voice(String server, String channel, String nick) {
         // Get the correct connection
         IrcGateway gw = this.getGateway(server);
@@ -313,7 +330,12 @@ public class SwircModel extends Observable {
         }
     }
     
-    
+    /**
+     * Removes voice rights from user
+     * @param server Server of the event
+     * @param channel Channel of the event
+     * @param nick User whose voice rights will be removed
+     */
     public void deVoice(String server, String channel, String nick) {
         // Get the correct connection
         IrcGateway gw = this.getGateway(server);

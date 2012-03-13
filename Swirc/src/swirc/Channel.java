@@ -58,8 +58,7 @@ public class Channel extends Observable {
     
     /**
      * Adds a row to the channel message list
-     * @param sender Sender of the message
-     * @param msg Message to be sent to channel
+     * @param row Row to be added
      */
     public void addRow(String row) {
         this.contents = this.contents + "\n" + row;
@@ -151,6 +150,10 @@ public class Channel extends Observable {
         model.deVoice(this.server, name, nick);
     }
     
+    /**
+     * Removes user from users-list
+     * @param nick User to be removed
+     */
     public void removeUser(String nick) {
         Object[] nicks = users.toArray();
         for(int i = 0; i < nicks.length; i++) {
