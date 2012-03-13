@@ -94,7 +94,7 @@ public class SwircController implements ActionListener, Observer {
     public void update(Observable o, Object arg) {
         String code = arg.toString();
         //System.out.println(code);
-        if(code.equals("connected")) {
+        if(code.startsWith("ConnectedServer")) {
             this.view.setJoinEnabled();
             this.view.setReconnectEnabled();
         }
@@ -125,6 +125,9 @@ public class SwircController implements ActionListener, Observer {
         }
         else if(code.equals("cant join")) {
             this.view.showWarning("Can't join channel!");
+        }
+        else if(code.equals("userDataError")) {
+            this.view.showWarning("There were empty fields in userdata!");
         }
     }
 }

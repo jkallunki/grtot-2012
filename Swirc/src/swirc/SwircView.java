@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -24,6 +25,8 @@ public class SwircView extends JFrame implements Observer {
     private JMenuBar menuBar;
     private JToolBar toolBar;
     private Action quit, connect, disconnect, reconnect, join, leave;
+    
+    private HashMap<String,ServerTab> serverTabs = new HashMap<String,ServerTab>();
     
     /**
      * Constructor.
@@ -236,14 +239,8 @@ public class SwircView extends JFrame implements Observer {
      * @param serverAddress 
      */
     public void addServerView(String serverAddress) {
-        JPanel tab = new JPanel(new BorderLayout());
-        
-        JTextPane messages = new JTextPane();
-        messages.setText("Connected " + serverAddress + "\n");
-        messages.setEditable(false);
-        JScrollPane msgPane = new JScrollPane(messages);
-        tab.add(msgPane, BorderLayout.CENTER);
-        
+        ServerTab tab = new ServerTab(serverAddress);
+        serverTabs.put(serverAddress, tab);
         tabs.addTab(serverAddress, tab);
     }
     
@@ -314,9 +311,19 @@ public class SwircView extends JFrame implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+        
+        // Joined a channel
         if(arg instanceof Channel) {
             this.addChannelView((Channel) arg);
             this.setLeaveEnabled();
+        }
+        
+        if(arg instanceof String) {
+            String code = (String)arg;
+            if(code.startsWith("ConnectedServer")) {
+                String serverAddress = code.replace("ConnectedServer:", "");
+                serverTabs.get(serverAddress).addMsg("Connected.");
+            }
         }
     }
     

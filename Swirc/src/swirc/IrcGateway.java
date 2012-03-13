@@ -1,6 +1,7 @@
 package swirc;
 import java.util.ArrayList;
 import java.util.Iterator;
+import org.jibble.pircbot.NickAlreadyInUseException;
 import org.jibble.pircbot.PircBot;
 import org.jibble.pircbot.User;
 
@@ -8,16 +9,27 @@ import org.jibble.pircbot.User;
  * Class to extend abstract class PircBot.
  * @author Janne Kallunki, Ville Hämäläinen, Jaakko Ritvanen
  */
-public class IrcGateway extends PircBot {
+public class IrcGateway extends PircBot implements Runnable {
     private SwircModel model;
     private ArrayList<Channel> channels;
+    
+    private String serverAddress;
+    private String nick;
+    private String port;
+    private String password;
+    
     /**
      * Constructor.
      * @param model SwircModel of this IrcGateway
      * @param nick Nickname of the user
      */
-    public IrcGateway(SwircModel model, String nick) {
+    public IrcGateway(SwircModel model, String serverAddress, String nick, String port, String password) throws Exception {
         this.model = model;
+        this.serverAddress = serverAddress;
+        this.nick = nick;
+        this.port = port;
+        this.password = password;
+        
         this.setName(nick);
         channels = new ArrayList<Channel>();
     }
@@ -49,7 +61,7 @@ public class IrcGateway extends PircBot {
         System.out.println("onJoin()");
         if(joinedNick.equals(this.getNick())) {
             System.out.println("it was us!");
-            c = new Channel(channelName, this);
+            c = new Channel(channelName, this.getServer(), this.model);
             channels.add(c);
             model.joinedChannel(c);
         }
@@ -66,6 +78,48 @@ public class IrcGateway extends PircBot {
         Channel c = this.getChannel(channel);
         for(int i = 0; i < users.length; i++) {
             c.addUser(users[i].toString());
+        }
+    }
+
+    /**
+     * Initializes the connection
+     */
+    @Override
+    public void run() {
+        try {
+            this.setVerbose(true);
+            if(port == null && password == null) {
+                this.connect(this.serverAddress);
+            }
+            else if(port != null && password == null) {
+                this.connect(this.serverAddress, Integer.parseInt(port));
+            }
+            else {
+                this.connect(this.serverAddress, Integer.parseInt(port), password);
+            }
+            model.connectedServer(this.serverAddress);
+        }
+        catch(NickAlreadyInUseException e) {
+            this.setVerbose(true);
+            try {
+                if(port == null && password == null) {
+                    this.connect(this.serverAddress);
+                }
+                else if(port != null && password == null) {
+                    this.connect(this.serverAddress, Integer.parseInt(port));
+                }
+                else {
+                    this.connect(this.serverAddress, Integer.parseInt(port), password);
+                }
+            }
+            catch(Exception ee) {
+                System.out.println("Cant connect!");
+                model.cantConnect();
+            }
+        }
+        catch(Exception e) {
+            System.out.println("Cant connect!");
+            model.cantConnect();
         }
     }
 }
