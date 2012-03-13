@@ -42,8 +42,13 @@ public class SwircConfs {
             input.close();
         }
         catch(FileNotFoundException e) {
-            System.out.println(e.toString());
-            File makefile = new File("src/properties/usedServers");
+            try {
+                FileOutputStream out = new FileOutputStream("src/properties/usedServers");
+                out.close();
+            }
+            catch(Exception ex) {
+                
+            }
         }
         catch(Exception e) {
             System.out.println(e.toString());
@@ -57,8 +62,13 @@ public class SwircConfs {
             dataIn.close();
         }
         catch(FileNotFoundException e) {
-            System.out.println(e.toString());
-            File makefile = new File("src/properties/userData");
+            try {
+                FileOutputStream out = new FileOutputStream("src/properties/userData");
+                out.close();
+            }
+            catch(Exception ex) {
+                
+            }
         }
         catch(Exception e) {
             //TODO properties not found
