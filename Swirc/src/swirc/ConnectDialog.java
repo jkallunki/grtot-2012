@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
@@ -56,8 +58,20 @@ public class ConnectDialog extends JDialog {
         
         inputPane.add(new JLabel("Password"));
         serverPsw = new JPasswordField(20);
+        serverPsw.setEchoChar('*');
         inputPane.add(serverPsw);
         showPsw = new  JCheckBox("Show password");
+        showPsw.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!showPsw.isSelected()) {
+                    serverPsw.setEchoChar('*');
+                }
+                else {
+                    serverPsw.setEchoChar((char)0);
+                }
+            }
+        });
         inputPane.add(showPsw);
             
         //TODO remember to remove nick from this dialog
