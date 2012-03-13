@@ -97,11 +97,13 @@ public class SwircController implements ActionListener, Observer {
         if(code.startsWith("ConnectedServer")) {
             this.view.setJoinEnabled();
             this.view.setReconnectEnabled();
+            this.view.setDisconnectEnabled();
         }
         else if(code.equals("disconnect")) {
             this.view.closeAllTabs();
             this.view.setJoinUnenabled();
             this.view.setLeaveUnenabled();
+            this.view.setDisconnectUnenabled();
         }
         else if(code.equals("reconnect")) {
             String[] servers = this.model.getConnectedServers();
