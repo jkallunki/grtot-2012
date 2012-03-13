@@ -33,12 +33,12 @@ public class SwircController implements ActionListener, Observer {
         if(code.equals("connectServer")) {
             HashMap<String,String> con = view.connectPrompt();
             if(con != null) {
-                if(!con.get("serverAddress").equals("") && !con.get("nick").equals("")) {
+                if(!con.get("serverAddress").equals("")) {
                     this.view.addServerView(con.get("serverAddress"));
-                    this.model.connect(con.get("serverAddress"), con.get("nick"), con.get("port"), con.get("pasword"));
+                    this.model.connect(con.get("serverAddress"), con.get("port"), con.get("password"));
                 }
                 else {
-                    view.showWarning("Your server address or nick was empty!");
+                    view.showWarning("Your server address was empty!");
                 }
             }
         }

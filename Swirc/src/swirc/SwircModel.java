@@ -52,10 +52,10 @@ public class SwircModel extends Observable {
      * @param port Server's port
      * @param password  Server's password
      */
-    public void connect(String serverAddress, String nick, String port, String password) {
+    public void connect(String serverAddress, String port, String password) {
         IrcGateway igw;
         try {
-            igw = new IrcGateway(this, serverAddress, nick, port, password);
+            igw = new IrcGateway(this, serverAddress, confs.getUserData("nick"), port, password);
             new Thread(igw).start();
             connections.add(igw);
             if(!confs.findServer(serverAddress)) {
@@ -173,8 +173,7 @@ public class SwircModel extends Observable {
     
     /**
      * Sets user data to confs
-     * @param key Key to user's data
-     * @param value User's data
+     * @param userData User's data
      */
     public void setUserData(HashMap<String, String> userData) {
         HashMap<String, String> data = new HashMap<String, String>();
@@ -241,7 +240,7 @@ public class SwircModel extends Observable {
      * Kicks user with given nick out of the given channel in given server
      * @param server Server of the wanted channel
      * @param channel Channel from where user will be kicked
-     * @param nick U
+     * @param nick User's nick
      */
     public void kick(String server, String channel, String nick) {
         // Get the correct connection
@@ -256,6 +255,12 @@ public class SwircModel extends Observable {
         }
     }
     
+    /**
+     * Bans user with given nick out of the given channel in given server
+     * @param server Server of the wanted channel
+     * @param channel Channel from where user will be kicked
+     * @param nick User's nick
+     */
     public void ban(String server, String channel, String nick) {
         // Get the correct connection
         IrcGateway gw = this.getGateway(server);
@@ -330,11 +335,18 @@ public class SwircModel extends Observable {
         return confs;
     }
     
+    /**
+     * Notifies observers that can't connect to server
+     */
     public void cantConnect() {
         this.setChanged();
         this.notifyObservers("cant connect");
     }
     
+    /**
+     * Notifies observers that has connected to server
+     * @param serverAddress server where is connected
+     */
     public void connectedServer(String serverAddress) {
         this.setChanged();
         this.notifyObservers("ConnectedServer:" + serverAddress);

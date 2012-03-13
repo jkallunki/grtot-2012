@@ -21,7 +21,11 @@ public class IrcGateway extends PircBot implements Runnable {
     /**
      * Constructor.
      * @param model SwircModel of this IrcGateway
+     * @param serverAddress Server of this IrcGateway
      * @param nick Nickname of the user
+     * @param port Port of this IrcGateway
+     * @param password Password of server
+     * @throws Exception  
      */
     public IrcGateway(SwircModel model, String serverAddress, String nick, String port, String password) throws Exception {
         this.model = model;

@@ -29,6 +29,10 @@ public class ServerTab extends JPanel {
         this.add(msgPane, BorderLayout.CENTER);
     }
     
+    /**
+     * Adds message to messages panel.
+     * @param msg message to be added
+     */
     public void addMsg(String msg) {
         this.messages.setText(this.messages.getText() + "\n" + msg);
     }
