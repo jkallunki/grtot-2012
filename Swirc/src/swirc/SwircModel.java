@@ -52,10 +52,10 @@ public class SwircModel extends Observable {
      * @param port Server's port
      * @param password  Server's password
      */
-    public void connect(String serverAddress, String nick, String port, String password) {
+    public void connect(String serverAddress, String port, String password) {
         IrcGateway igw;
         try {
-            igw = new IrcGateway(this, serverAddress, nick, port, password);
+            igw = new IrcGateway(this, serverAddress, confs.getUserData("nick"), port, password);
             new Thread(igw).start();
             connections.add(igw);
             if(!confs.findServer(serverAddress)) {
