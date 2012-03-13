@@ -199,12 +199,18 @@ public class SwircModel extends Observable {
     
     /**
      * Notifies Observers that someone joined to channel
+     * @param c Channel where someone joined
      */
     public void joinedChannel(Channel c) {
         this.setChanged();
         this.notifyObservers(c);
     }
     
+    /**
+     * Returns IrcGateway which has given name of the server
+     * @param serverName Name of the server in wanted IrcGateway
+     * @return IrcGateway which has given name of the server
+     */
     public IrcGateway getGateway(String serverName) {
         Object[] cons = connections.toArray();
         String[] servers = new String[cons.length];
@@ -217,6 +223,12 @@ public class SwircModel extends Observable {
         return null;
     }
     
+    /**
+     * Kicks user with given nick out of the given channel in given server
+     * @param server Server of the wanted channel
+     * @param channel Channel from where user will be kicked
+     * @param nick U
+     */
     public void kick(String server, String channel, String nick) {
         // Get the correct connection
         IrcGateway gw = this.getGateway(server);
