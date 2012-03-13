@@ -57,6 +57,18 @@ public class Channel extends Observable {
     }
     
     /**
+     * Adds a row to the channel message list
+     * @param sender Sender of the message
+     * @param msg Message to be sent to channel
+     */
+    public void addRow(String row) {
+        this.contents = this.contents + "\n" + row;
+        this.setChanged();
+        this.notifyObservers("message");
+    }
+    
+    
+    /**
      * Returns contents of channel
      * @return Contents of channel
      */
@@ -86,7 +98,7 @@ public class Channel extends Observable {
     }
     
     /**
-     * Kikcs given user from the channel
+     * Kicks given user from the channel
      * @param nick User to be kicked from the channel
      */
     public void kick(String nick) {
@@ -101,5 +113,52 @@ public class Channel extends Observable {
     public void ban(String nick) {
         nick = nick.replace("@", "").replace("+", "");
         model.ban(this.server, name, nick + "!*@*");
+    }
+    
+    /**
+     * Ops given user
+     * @param nick User to be opped
+     */
+    public void op(String nick) {
+        nick = nick.replace("@", "").replace("+", "");
+        model.op(this.server, name, nick);
+    }
+    
+    /**
+     * De-ops given user
+     * @param nick User to be de-opped
+     */
+    public void deOp(String nick) {
+        nick = nick.replace("@", "").replace("+", "");
+        model.deOp(this.server, name, nick);
+    }
+    
+    /**
+     * Voices given user
+     * @param nick User to be voiced
+     */
+    public void voice(String nick) {
+        nick = nick.replace("@", "").replace("+", "");
+        model.voice(this.server, name, nick);
+    }
+    
+    /**
+     * De-voices given user
+     * @param nick User to be de-voiced
+     */
+    public void deVoice(String nick) {
+        nick = nick.replace("@", "").replace("+", "");
+        model.deVoice(this.server, name, nick);
+    }
+    
+    public void removeUser(String nick) {
+        Object[] nicks = users.toArray();
+        for(int i = 0; i < nicks.length; i++) {
+            String n = (String) nicks[i];
+            String n2 = n.replace("@", "").replace("+", "");
+            if(n2.equals(nick)) {
+                users.removeElement(n);
+            }
+        }
     }
 }

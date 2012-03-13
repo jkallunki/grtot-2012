@@ -268,6 +268,59 @@ public class SwircModel extends Observable {
             gw.ban(channel, nick + "!*@*");
         }
     }
+
+    public void op(String server, String channel, String nick) {
+        // Get the correct connection
+        IrcGateway gw = this.getGateway(server);
+        
+        if(gw != null) {
+            // Remove mode symbols
+            nick = nick.replace("@", "").replace("+", "");
+
+            // Op the user
+            gw.op(channel, nick);
+        }
+    }
+    
+    public void deOp(String server, String channel, String nick) {
+        // Get the correct connection
+        IrcGateway gw = this.getGateway(server);
+        
+        if(gw != null) {
+            // Remove mode symbols
+            nick = nick.replace("@", "").replace("+", "");
+
+            // Op the user
+            gw.deOp(channel, nick);
+        }
+    }
+    
+    public void voice(String server, String channel, String nick) {
+        // Get the correct connection
+        IrcGateway gw = this.getGateway(server);
+        
+        if(gw != null) {
+            // Remove mode symbols
+            nick = nick.replace("@", "").replace("+", "");
+
+            // Ban only the nick without hostmask
+            gw.voice(channel, nick);
+        }
+    }
+    
+    
+    public void deVoice(String server, String channel, String nick) {
+        // Get the correct connection
+        IrcGateway gw = this.getGateway(server);
+        
+        if(gw != null) {
+            // Remove mode symbols
+            nick = nick.replace("@", "").replace("+", "");
+
+            // Ban only the nick without hostmask
+            gw.deVoice(channel, nick);
+        }
+    }
     
     /**
      * Returns configuration object

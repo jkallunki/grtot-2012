@@ -58,7 +58,6 @@ public class IrcGateway extends PircBot implements Runnable {
         Channel c;
         
         // We joined a channel
-        System.out.println("onJoin()");
         if(joinedNick.equals(this.getNick())) {
             System.out.println("it was us!");
             c = new Channel(channelName, this.getServer(), this.model);
@@ -81,6 +80,22 @@ public class IrcGateway extends PircBot implements Runnable {
         }
     }
 
+    @Override
+    protected void onKick(String channel, String kickerNick, String kickerLogin, String kickerHostname, String recipientNick, String reason) {
+        Channel c = this.getChannel(channel);
+        if(c != null) {
+            // We got kicked
+            if(recipientNick.equals(this.getNick())) {
+                System.out.println("it was us!");
+            }
+            // Someone else got kicked
+            else {
+                c.removeUser(nick);
+                c.addRow(recipientNick + " was kicked by " + kickerNick);
+            }
+        }
+    }
+    
     /**
      * Initializes the connection
      */
