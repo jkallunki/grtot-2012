@@ -43,7 +43,9 @@ public class SwircModel extends Observable {
     /**
      * Method creates connection to server.
      * @param serverAddress Address of the server
-     * @param nick Nickname of the user 
+     * @param nick Nickname of the user
+     * @param port Server's port
+     * @param password  Server's password
      */
     public void connect(String serverAddress, String nick, String port, String password) {
         try {
@@ -176,6 +178,10 @@ public class SwircModel extends Observable {
         return servers;
     }
     
+    /**
+     * Returns servers which has been used from confs.
+     * @return Used servers
+     */
     public String[] getUsedServers() {
         return confs.getServers();
     }
@@ -195,18 +201,34 @@ public class SwircModel extends Observable {
         return channels;
     }
     
+    /**
+     * Sets user data to confs
+     * @param key Key to user's data
+     * @param value User's data
+     */
     public void setUserData(String key, String value) {
         confs.setUserData(key, value);
     }
     
+    /**
+     * Returns user data with given key
+     * @param key Key to user data
+     * @return User data with given key
+     */
     public String getUserData(String key) {
         return confs.getUserData(key);
     }
     
+    /**
+     * Saves user's data
+     */
     public void saveUserData() {
         confs.saveUserData();
     }
-
+    
+    /**
+     * Notifies Observers that someone joined to channel
+     */
     void joinedChannel(Channel c) {
         this.setChanged();
         this.notifyObservers(c);
