@@ -94,7 +94,7 @@ public class IrcGateway extends PircBot implements Runnable {
             }
             // Someone else got kicked
             else {
-                c.removeUser(nick);
+                c.removeUser(recipientNick);
                 c.addRow(recipientNick + " was kicked by " + kickerNick);
             }
         }
