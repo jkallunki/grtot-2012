@@ -64,13 +64,7 @@ public class SwircController implements ActionListener, Observer {
         else if(code.equals("userData")) {
             HashMap<String, String> saveUser = view.userPrompt();
             if(saveUser != null) {
-                Iterator i = saveUser.entrySet().iterator();
-                while(i.hasNext()) {
-                    Map.Entry entry = (Map.Entry)i.next();
-                    
-                    this.model.setUserData((String)entry.getKey(), (String)entry.getValue());
-                    i.remove();
-                }
+                this.model.setUserData(saveUser);
                 this.model.saveUserData();
 
             }
@@ -97,11 +91,13 @@ public class SwircController implements ActionListener, Observer {
         if(code.startsWith("ConnectedServer")) {
             this.view.setJoinEnabled();
             this.view.setReconnectEnabled();
+            this.view.setDisconnectEnabled();
         }
         else if(code.equals("disconnect")) {
             this.view.closeAllTabs();
             this.view.setJoinUnenabled();
             this.view.setLeaveUnenabled();
+            this.view.setDisconnectUnenabled();
         }
         else if(code.equals("reconnect")) {
             String[] servers = this.model.getConnectedServers();
@@ -128,6 +124,9 @@ public class SwircController implements ActionListener, Observer {
         }
         else if(code.equals("userDataError")) {
             this.view.showWarning("There were empty fields in userdata!");
+        }
+        else if(code.equals("userDataDublicate")) {
+            this.view.showWarning("Some of your userdata was wrong!");
         }
     }
 }

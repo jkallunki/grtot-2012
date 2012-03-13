@@ -66,6 +66,7 @@ public class SwircView extends JFrame implements Observer {
         item = new JMenuItem(disconnect);
         item.setActionCommand("disconnect");
         item.addActionListener(controller);
+        disconnect.setEnabled(false);
         serverMenu.add(item);
         
         reconnect = new ActionReconnect("Reconnect");
@@ -143,6 +144,21 @@ public class SwircView extends JFrame implements Observer {
     public void resetInput() {
         input.setText("");
     }
+    
+    /**
+     * Sets disconnect-JMenuItem enabled
+     */
+    public void setDisconnectEnabled() {
+        disconnect.setEnabled(true);
+    }
+    
+    /**
+     * Sets disconnect-JMenuItem unenabled
+     */
+    public void setDisconnectUnenabled() {
+        disconnect.setEnabled(false);
+    }
+    
     
     /**
      * Sets join-JMenuItem enabled
