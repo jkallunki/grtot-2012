@@ -31,13 +31,31 @@ public class SwircController implements ActionListener, Observer {
     public void actionPerformed(ActionEvent e) {
         String code = e.getActionCommand();
         if(code.equals("connectServer")) {
-            HashMap<String,String> con = view.connectPrompt();
-            if(con != null && !con.get("serverAddress").equals("")) {
-                this.view.addServerView(con.get("serverAddress"));
-                this.model.connect(con.get("serverAddress"), con.get("port"), con.get("pasword"));
+            // Check if user data is set (required for connecting)
+            if(
+                model.getConfs().getUserData("nick") == null || model.getConfs().getUserData("nick").equals("")
+                || model.getConfs().getUserData("secondaryNick") == null || model.getConfs().getUserData("secondaryNick").equals("")
+                || model.getConfs().getUserData("username") == null || model.getConfs().getUserData("username").equals("")
+                || model.getConfs().getUserData("realName") == null || model.getConfs().getUserData("realName").equals("")
+            ) {
+                view.showWarning("User data needs to be filled before connecting.");
+                HashMap<String, String> saveUser = view.userPrompt();
+                if(saveUser != null) {
+                    this.model.setUserData(saveUser);
+                    this.model.saveUserData();
+                }
             }
             else {
-                view.showWarning("Your server address or nick was empty!");
+                HashMap<String,String> con = view.connectPrompt();
+                if(con != null) {
+                    if(!con.get("serverAddress").equals("")) {
+                        this.view.addServerView(con.get("serverAddress"));
+                        this.model.connect(con.get("serverAddress"), con.get("port"), con.get("password"));
+                    }
+                    else {
+                        view.showWarning("Your server address was empty!");
+                    }
+                }
             }
         }
         else if(code.equals("disconnect")) {
@@ -66,7 +84,6 @@ public class SwircController implements ActionListener, Observer {
             if(saveUser != null) {
                 this.model.setUserData(saveUser);
                 this.model.saveUserData();
-
             }
         }
         else if(code.equals("send")) {

@@ -47,7 +47,6 @@ public class ChannelTab extends JPanel implements Observer {
                 String nick = (String) users.getSelectedValue();
                 channel.kick(nick);
             }
-            
         });
         userMenu.add(item);
         
@@ -59,7 +58,54 @@ public class ChannelTab extends JPanel implements Observer {
                 String nick = (String) users.getSelectedValue();
                 channel.ban(nick);
             }
-            
+        });
+        userMenu.add(item);
+        
+        userMenu.addSeparator();
+        
+        item = new JMenuItem("Op");
+        item.setActionCommand("op");
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nick = (String) users.getSelectedValue();
+                channel.op(nick);
+            }
+        });
+        userMenu.add(item);
+        
+        item = new JMenuItem("De-op");
+        item.setActionCommand("deOp");
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nick = (String) users.getSelectedValue();
+                channel.deOp(nick);
+            }
+        });
+        userMenu.add(item);
+        
+        userMenu.addSeparator();
+        
+        item = new JMenuItem("Voice");
+        item.setActionCommand("voice");
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nick = (String) users.getSelectedValue();
+                channel.voice(nick);
+            }
+        });
+        userMenu.add(item);
+        
+        item = new JMenuItem("De-voice");
+        item.setActionCommand("deVoice");
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nick = (String) users.getSelectedValue();
+                channel.deVoice(nick);
+            }
         });
         userMenu.add(item);
         
