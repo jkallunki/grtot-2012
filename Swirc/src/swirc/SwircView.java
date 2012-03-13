@@ -329,7 +329,8 @@ public class SwircView extends JFrame implements Observer {
         
         /**
          * Constructor
-         * @param text 
+         * @param text Defines an Action object with the specified description 
+         * string and a default icon
          */
         public ActionQuit(String text) {
             super(text);
@@ -352,7 +353,8 @@ public class SwircView extends JFrame implements Observer {
         
         /**
          * Constructor
-         * @param text 
+         * @param text Defines an Action object with the specified description 
+         * string and a default icon
          */
         public ActionConnect(String text) {
             super(text);
@@ -374,7 +376,8 @@ public class SwircView extends JFrame implements Observer {
         
         /**
          * Constructor
-         * @param text 
+         * @param text Defines an Action object with the specified description 
+         * string and a default icon
          */
         public ActionDisconnect(String text) {
             super(text);
@@ -396,8 +399,9 @@ public class SwircView extends JFrame implements Observer {
     public class ActionReconnect extends AbstractAction {
         
         /**
-         * 
-         * @param text 
+         * Constructor
+         * @param text Defines an Action object with the specified description 
+         * string and a default icon
          */
         public ActionReconnect(String text) {
             super(text);
@@ -419,8 +423,9 @@ public class SwircView extends JFrame implements Observer {
     public class ActionJoin extends AbstractAction {
         
         /**
-         * 
-         * @param text 
+         * Constructor
+         * @param text Defines an Action object with the specified description 
+         * string and a default icon
          */
         public ActionJoin(String text) {
             super(text);
@@ -442,8 +447,9 @@ public class SwircView extends JFrame implements Observer {
     public class ActionLeave extends AbstractAction {
         
         /**
-         * 
-         * @param text 
+         * Constructor
+         * @param text Defines an Action object with the specified description 
+         * string and a default icon
          */
         public ActionLeave(String text) {
             super(text);
