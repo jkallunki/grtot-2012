@@ -18,8 +18,8 @@ public class Channel extends Observable {
     /**
      * Constructor
      * @param name Name of channel
-     * @param name Server address
-     * @param gw IrcGateway for the channel 
+     * @param server Server address
+     * @param model SwircModel of this channel
      */
     public Channel(String name, String server, SwircModel model) {
         this.name = name;
