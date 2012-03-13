@@ -1,7 +1,6 @@
 package swirc;
 
-import java.util.ArrayList;
-import java.util.Observable;
+import java.util.*;
 import org.jibble.pircbot.NickAlreadyInUseException;
 
 /**
@@ -88,9 +87,9 @@ public class SwircModel extends Observable {
                 this.notifyObservers("connected");
             }
             catch(Exception ee) {
-                System.out.println("Cant connect!");
-                this.setChanged();
-                this.notifyObservers("cant connect");
+//                System.out.println("Cant connect!");
+//                this.setChanged();
+//                this.notifyObservers("cant connect");
             }
         }
         catch(Exception e) {
@@ -206,13 +205,22 @@ public class SwircModel extends Observable {
      * @param key Key to user's data
      * @param value User's data
      */
-    public void setUserData(String key, String value) {
-        if(key.isEmpty() || value.isEmpty()) {
-            this.setChanged();
-            this.notifyObservers("userDataError");
-        }
-        else {
-            confs.setUserData(key, value);
+    public void setUserData(HashMap<String, String> userData) {
+        HashMap<String, String> data = new HashMap<String, String>();
+        Iterator i = userData.entrySet().iterator();
+        while(i.hasNext()) {
+            Map.Entry entry = (Map.Entry)i.next();
+            
+            if(data.containsValue((String)entry.getValue())) {
+                this.setChanged();
+                this.notifyObservers("userDataDublicate");
+                break;
+            }
+            else {
+                confs.setUserData((String)entry.getKey(), (String)entry.getValue());
+            }
+            data.put((String)entry.getKey(), (String)entry.getValue());
+            i.remove();
         }
     }
     
