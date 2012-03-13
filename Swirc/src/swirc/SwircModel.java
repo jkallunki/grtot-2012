@@ -2,6 +2,8 @@ package swirc;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jibble.pircbot.NickAlreadyInUseException;
 
 /**
@@ -46,53 +48,16 @@ public class SwircModel extends Observable {
      * @param nick Nickname of the user 
      */
     public void connect(String serverAddress, String nick, String port, String password) {
+        IrcGateway igw;
         try {
-            IrcGateway igw = new IrcGateway(this, nick);
-            igw.setVerbose(true);
-            if(port == null && password == null) {
-                igw.connect(serverAddress);
-            }
-            else if(port != null && password == null) {
-                igw.connect(serverAddress, Integer.parseInt(port));
-            }
-            else {
-                igw.connect(serverAddress, Integer.parseInt(port), password);
-            }
+            igw = new IrcGateway(this, serverAddress, nick, port, password);
+            new Thread(igw).start();
             connections.add(igw);
             if(!confs.findServer(serverAddress)) {
                 confs.addServer(serverAddress);
             }
             this.setChanged();
-            this.notifyObservers("connected");
-        }
-        catch(NickAlreadyInUseException e) {
-            IrcGateway igw = new IrcGateway(this, confs.getUserData("secondaryNick"));
-            igw.setVerbose(true);
-            try {
-                if(port == null && password == null) {
-                    igw.connect(serverAddress);
-                }
-                else if(port != null && password == null) {
-                    igw.connect(serverAddress, Integer.parseInt(port));
-                }
-                else {
-                    igw.connect(serverAddress, Integer.parseInt(port), password);
-                }
-                connections.add(igw);
-                if(!confs.findServer(serverAddress)) {
-                    confs.addServer(serverAddress);
-                }
-                this.setChanged();
-                this.notifyObservers("connected");
-            }
-            catch(Exception ee) {
-                System.out.println("Cant connect!");
-                this.setChanged();
-                this.notifyObservers("cant connect");
-            }
-        }
-        catch(Exception e) {
-            System.out.println("Cant connect!");
+        } catch (Exception ex) {
             this.setChanged();
             this.notifyObservers("cant connect");
         }
@@ -207,9 +172,56 @@ public class SwircModel extends Observable {
         confs.saveUserData();
     }
 
-    void joinedChannel(Channel c) {
+    public void joinedChannel(Channel c) {
         this.setChanged();
         this.notifyObservers(c);
-        System.out.println("JOINED CHANNEL " + c.getName());
+    }
+    
+    public IrcGateway getGateway(String serverName) {
+        Object[] cons = connections.toArray();
+        String[] servers = new String[cons.length];
+        for(int i = 0; i < cons.length; i++) {
+            irc = (IrcGateway) cons[i];
+            if(serverName.equals(irc.getServer())) {
+                return irc;
+            }
+        }
+        return null;
+    }
+    
+    public void kick(String server, String channel, String nick) {
+        // Get the correct connection
+        IrcGateway gw = this.getGateway(server);
+        
+        if(gw != null) {
+            // Remove mode symbols
+            nick = nick.replace("@", "").replace("+", "");
+
+            // Kick the user
+            gw.kick(channel, nick);
+        }
+    }
+    
+    public void ban(String server, String channel, String nick) {
+        // Get the correct connection
+        IrcGateway gw = this.getGateway(server);
+        
+        if(gw != null) {
+            // Remove mode symbols
+            nick = nick.replace("@", "").replace("+", "");
+
+            // Ban only the nick without hostmask
+            gw.ban(channel, nick + "!*@*");
+        }
+    }
+    
+    public void cantConnect() {
+        this.setChanged();
+        this.notifyObservers("cant connect");
+    }
+    
+    public void connectedServer(String serverAddress) {
+        this.setChanged();
+        this.notifyObservers("ConnectedServer:" + serverAddress);
     }
 }

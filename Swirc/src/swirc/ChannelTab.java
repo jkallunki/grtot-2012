@@ -109,15 +109,4 @@ public class ChannelTab extends JPanel implements Observer {
         }
     }
     
-    
-    public class ActionReconnect extends AbstractAction {
-        public ActionReconnect(String text) {
-            super(text);
-        }
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        }
-        
-    }
-    
 }

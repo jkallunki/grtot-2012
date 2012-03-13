@@ -9,20 +9,24 @@ import javax.swing.DefaultListModel;
  */
 public class Channel extends Observable {
     private String name;
+    private String server;
+    private SwircModel model;
+    
     private DefaultListModel users;
     private String contents;
-    private IrcGateway gateway;
     
     /**
      * Constructor
      * @param name Name of channel
+     * @param name Server address
      * @param gw IrcGateway for the channel 
      */
-    public Channel(String name, IrcGateway gw) {
+    public Channel(String name, String server, SwircModel model) {
         this.name = name;
+        this.server = server;
+        this.model = model;
         this.users = new DefaultListModel();
         this.contents = "Now talking at " + this.name;
-        this.gateway = gw;
     }
     
     /**
@@ -87,7 +91,7 @@ public class Channel extends Observable {
      */
     public void kick(String nick) {
         nick = nick.replace("@", "").replace("+", "");
-        gateway.kick(this.name, nick);
+        model.kick(this.server, this.name, nick);
     }
     
     /**
@@ -96,6 +100,6 @@ public class Channel extends Observable {
      */
     public void ban(String nick) {
         nick = nick.replace("@", "").replace("+", "");
-        gateway.ban(name, nick + "!*@*");
+        model.ban(this.server, name, nick + "!*@*");
     }
 }
