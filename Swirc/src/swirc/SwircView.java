@@ -172,22 +172,32 @@ public class SwircView extends JFrame implements Observer {
         leave.setEnabled(false);
     }
     
+    /**
+     * Sets reconnect action to enabled
+     */
     public void setReconnectEnabled() {
         reconnect.setEnabled(true);
     }
     
+    /**
+     * Sets reconnect action to unenabled
+     */
     public void setReconnectUnenabled() {
         reconnect.setEnabled(false);
     }
     
     /**
      * Returns title of active channel
-     * @return 
+     * @return Title of active channel
      */
     public String getActiveChannel() {
         return tabs.getTitleAt(tabs.getSelectedIndex());
     }
     
+    /**
+     * Returns count of tabs
+     * @return Count of tabs
+     */
     public int getTabCount() {
         return tabs.getTabCount();
     }
@@ -199,10 +209,17 @@ public class SwircView extends JFrame implements Observer {
         tabs.remove(tabs.getSelectedIndex());
     }
     
+    /**
+     * Closes all tabs
+     */
     public void closeAllTabs() {
         tabs.removeAll();
     }
     
+    /**
+     * Shows warning message in dialog
+     * @param message Warning message
+     */
     public void showWarning(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
@@ -210,7 +227,7 @@ public class SwircView extends JFrame implements Observer {
     
     /**
      * Adds new channel view for given channel to tabs-JTabbedPane.
-     * @param channel Given channel
+     * @param c Given channel
      */
     public void addChannelView(Channel c) {
         ChannelTab ct = new ChannelTab(c);
@@ -285,6 +302,13 @@ public class SwircView extends JFrame implements Observer {
         }
     }
 
+    /**
+     * This method is called whenever the observed object is changed. An 
+     * application calls an Observable object's notifyObservers method to 
+     * have all the object's observers notified of the change.
+     * @param o The observable object.
+     * @param arg An argument passed to the notifyObservers method.
+     */
     @Override
     public void update(Observable o, Object arg) {
         
@@ -303,16 +327,15 @@ public class SwircView extends JFrame implements Observer {
         }
     }
     
-
+//TODO javadoc
     
     /**
-     * 
+     * Inner class for quit action
      */
-
     public class ActionQuit extends AbstractAction {
         
         /**
-         * 
+         * Constructor
          * @param text 
          */
         public ActionQuit(String text) {
@@ -320,8 +343,8 @@ public class SwircView extends JFrame implements Observer {
         }
         
         /**
-         * 
-         * @param e 
+         * Invoked when an action occurs. 
+         * @param e ActionEvent
          */
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -329,49 +352,114 @@ public class SwircView extends JFrame implements Observer {
         
     }
     
+    /**
+     * Inner class for connect action
+     */
     public class ActionConnect extends AbstractAction {
+        
+        /**
+         * Constructor
+         * @param text 
+         */
         public ActionConnect(String text) {
             super(text);
         }
+        
+        /**
+         * Invoked when an action occurs. 
+         * @param e ActionEvent
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
         }
     }
     
+    /**
+     * Inner class for disconnect action
+     */
     public class ActionDisconnect extends AbstractAction {
+        
+        /**
+         * Constructor
+         * @param text 
+         */
         public ActionDisconnect(String text) {
             super(text);
         }
+        
+        /**
+         * Invoked when an action occurs. 
+         * @param e ActionEvent
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
         }
         
     }
     
+    /**
+     * Inner class for reconnect action
+     */
     public class ActionReconnect extends AbstractAction {
+        
+        /**
+         * 
+         * @param text 
+         */
         public ActionReconnect(String text) {
             super(text);
         }
+        
+        /**
+         * Invoked when an action occurs. 
+         * @param e ActionEvent
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
         }
         
     }
     
+    /**
+     * Inner class for join action
+     */
     public class ActionJoin extends AbstractAction {
+        
+        /**
+         * 
+         * @param text 
+         */
         public ActionJoin(String text) {
             super(text);
         }
+        
+        /**
+         * Invoked when an action occurs. 
+         * @param e ActionEvent
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
         }
         
     }
     
+    /**
+     * Inner class for leave action
+     */
     public class ActionLeave extends AbstractAction {
+        
+        /**
+         * 
+         * @param text 
+         */
         public ActionLeave(String text) {
             super(text);
         }
+        
+        /**
+         * Invoked when an action occurs. 
+         * @param e ActionEvent
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
         }

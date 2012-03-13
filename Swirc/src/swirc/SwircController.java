@@ -126,5 +126,8 @@ public class SwircController implements ActionListener, Observer {
         else if(code.equals("cant join")) {
             this.view.showWarning("Can't join channel!");
         }
+        else if(code.equals("userDataError")) {
+            this.view.showWarning("There were empty fields in userdata!");
+        }
     }
 }

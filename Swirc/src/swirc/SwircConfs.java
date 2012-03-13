@@ -129,13 +129,16 @@ public class SwircConfs {
     
     /**
      * Gets user data with given key
-     * @param key
-     * @return 
+     * @param key Key of user's data
+     * @return User data with given key
      */
     public String getUserData(String key) {
         return this.userData.getProperty(key);
     }
     
+    /**
+     * Saves user's data to properties
+     */
     public void saveUserData() {
          try {
             FileOutputStream out = new FileOutputStream("src/properties/userData");
