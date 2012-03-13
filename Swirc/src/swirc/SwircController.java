@@ -88,7 +88,7 @@ public class SwircController implements ActionListener, Observer {
     public void update(Observable o, Object arg) {
         String code = arg.toString();
         //System.out.println(code);
-        if(code.equals("connected")) {
+        if(code.startsWith("ConnectedServer")) {
             this.view.setJoinEnabled();
             this.view.setReconnectEnabled();
         }
