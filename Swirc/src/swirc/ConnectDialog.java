@@ -18,7 +18,6 @@ public class ConnectDialog extends JDialog {
     private JSpinner portNumber;
     private JPasswordField serverPsw;
     private JCheckBox showPsw;
-    //private JTextField nick;
     private boolean confirmed;
     
     /**
@@ -59,12 +58,6 @@ public class ConnectDialog extends JDialog {
         inputPane.add(serverPsw);
         showPsw = new  JCheckBox("Show password");
         inputPane.add(showPsw);
-            
-        //TODO remember to remove nick from this dialog
-//        inputPane.add(new JLabel("Nick"));
-//        nick = new JTextField(20);
-//        nick.setText(this.model.getUserData("nick"));
-//        inputPane.add(nick);
         
         formPane.add(inputPane);
         
@@ -100,13 +93,6 @@ public class ConnectDialog extends JDialog {
         return (address.length() > 0) ? address : null;
     }
     
-    /**
-     * Method gets user's nickname.
-     * @return User's nickname
-     */
-//    public String getNick() {
-//        return nick.getText();
-//    }
     
     /**
      * Returns the password of the server
